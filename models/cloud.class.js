@@ -1,0 +1,22 @@
+
+class Cloud extends MoveableObject {
+  y = 10;
+  width = 300;
+  height = 200;
+
+  constructor() {
+    super().loadImage("img/layers_bg/third_layer/clouds1.png");
+    this.x = 0;
+    this.animate();
+  }
+
+ 
+  animate() {
+    setInterval(() => {
+      this.moveLeft();
+      if (this.x + this.width < 0) {
+        this.x = window.innerWidth + 2000;
+      }
+    }, 1000 / 60);
+  }
+}
