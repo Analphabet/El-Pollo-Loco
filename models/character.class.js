@@ -72,6 +72,42 @@ class Character {
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
+  this.animate();
   }
-}
+
+  
  
+  animate() {
+    intervals.push(
+      setInterval(() => {
+        this.animatePepe();
+      }, 1000 / 60)
+    );
+
+    intervals.push(
+      setInterval(() => {
+        this.animatePepeState();
+      }, 90)
+    );
+  }
+
+ 
+  animatePepe() {
+    this.pepeWalking();
+  }
+
+  
+  
+
+  pepeWalking() {
+    if (this.world.keyboard.RIGHT {
+      this.moveRight();
+      this.otherDirection = false;
+      }
+    }
+    if (this.world.keyboard.LEFT {
+      this.moveLeft();
+      this.otherDirection = true;
+      }
+    }
+  }
