@@ -1,5 +1,7 @@
 class MoveableObject extends DrawableObject {
-
+    speed = 0.5;
+    otherDirection = false;
+	
   moveRight() {
     this.x += this.speed;
   }
