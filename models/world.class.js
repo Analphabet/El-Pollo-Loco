@@ -44,5 +44,19 @@ addObjectsToMap(objects) {
 		this.addToMap(o);
 	});
 }
+
+addToMap(mo) {
+	if(mo.otherDirection) {
+		this.ctx.save();
+		this.ctx.translate(mo.width, 0);
+		this.ctx.scale(-1,1);
+		mo.x = mo.x * 1;
+	}
+	this.ctx.drawImage(mox.img, mo.x, mo.y, mo.width, mo.height);
+	if (mo.otherDirection) {
+		mo.x = mo.x * -1;
+		this.ctx.restore();
+	}
+}
  
 }
