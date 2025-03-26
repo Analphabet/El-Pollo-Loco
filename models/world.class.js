@@ -2,6 +2,7 @@
 class World {
 
  character = new Character();
+ statusBar = new Statusbar();
  enemies = [
 	new Chicken(),
 	new Chicken(),
@@ -18,6 +19,7 @@ class World {
  canvas;
  ctx;
  keyboard;
+ camera_x = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");

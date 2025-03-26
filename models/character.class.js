@@ -100,14 +100,25 @@ class Character {
   
 
   pepeWalking() {
-    if (this.world.keyboard.RIGHT {
+    if (this.world.keyboard.RIGHT) {
       this.moveRight();
       this.otherDirection = false;
       }
-    }
-    if (this.world.keyboard.LEFT {
+    
+    if (this.world.keyboard.LEFT) {
       this.moveLeft();
       this.otherDirection = true;
       }
     }
-  }
+	
+	  pepeJumping() {
+        if ((this.world.keyboard.SPACE || this.world.keyboard.UP) && !this.isAboveGround()) {
+            this.jump();
+            this.idleTimer = 0;
+        }
+    }
+
+    positionCamera() {
+        this.world.camera_x = -this.x + 100;
+    }
+}
