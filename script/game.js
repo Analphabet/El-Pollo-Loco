@@ -1,21 +1,19 @@
 let canvas;
+let world;
 let gameActive = true;
-let character = new Image();
-let ctx;
+let throwingBottle = false;
+let keyboard = new Keyboard();
+let intervals = [];
 
-/**
- * Initialize the game.
- */
+
 function init() {
+    resetGame();
+    gameActive = true;
+    initLevel();
     canvas = document.getElementById('canvas');
-	ctx = canvas.getContext('2d');
-		character.src = './img/pepe/pepe_walk/W-21.png';
-
-	setTimeout (function(){
-		ctx.drawImage(character, 20, 20, 50, 120);
-	
-	}, 3000);
-	
+    world = new World(canvas, keyboard, level1);
+ 
+}
 
 
 function resetAnimationFrameId() {
@@ -25,9 +23,18 @@ function resetAnimationFrameId() {
     requestAnimationFrameId = 0;
 }
 
+
+function resetGame() {
+    keyboard = new Keyboard();
+    intervals = [];
+    world = null;
+}
+
+
 function addInterval(interval) {
     intervals.push(interval);
 }
+
 
 function stopAllIntervals() {
     resetAnimationFrameId();
@@ -35,7 +42,4 @@ function stopAllIntervals() {
         clearInterval(intervalId);
     });
     intervals = [];
-}
-
-
 }
