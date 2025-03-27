@@ -48,3 +48,4 @@ class Chicken extends MoveableObject {
     clearInterval(this.movementInterval);
     clearInterval(this.animationInterval);
   }
+}

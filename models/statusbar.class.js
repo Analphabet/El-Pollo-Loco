@@ -15,3 +15,5 @@ class Statusbar extends DrawableObject {
         this.y = 0;
         this.width = 100;
         this.height = 50;
+	}
+}

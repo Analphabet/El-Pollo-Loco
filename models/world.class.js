@@ -42,7 +42,7 @@ class World {
 }
 
 addObjectsToMap(objects) {
-	objects.forEach(o -> {
+	objects.forEach(o => {
 		this.addToMap(o);
 	});
 }

@@ -67,7 +67,6 @@ class Character {
   ];
 
   constructor() {
-    super().loadImage("img/pepe/pepe_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_DEAD);
