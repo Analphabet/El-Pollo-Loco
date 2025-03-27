@@ -2,6 +2,7 @@ class Character extends MoveableObject {
   y = 100;
   height = 200;
   width = 100;
+  speed = 10;
 
   IMAGES_WALKING = [
     "img/pepe/pepe_walk/W-21.png",
@@ -64,7 +65,7 @@ class Character extends MoveableObject {
     "img/pepe/pepe_idle/long_idle/I-18.png",
     "img/pepe/pepe_idle/long_idle/I-19.png",
     "img/pepe/pepe_idle/long_idle/I-20.png",
-  ];
+  ];  
 
   constructor() {
 	      super().loadImage("img/pepe/pepe_walk/W-21.png");
@@ -73,69 +74,109 @@ class Character extends MoveableObject {
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
   this.animate();
-  }
+        this.applyGravity();
+        this.jumping = false;
+        };
 
-  
- 
   animate() {
     intervals.push(
       setInterval(() => {
         this.animatePepe();
       }, 1000 / 60)
-    );
-
-    intervals.push(
-      setInterval(() => {
-        this.animatePepeState();
-      }, 90)
-    );
-  }
-
- 
-  animatePepe() {
-    this.pepeWalking();
-  }
+    );}
 
   
-  
-
-  pepeWalking() {
-    if (this.world.keyboard.RIGHT) {
-      this.moveRight();
-      this.otherDirection = false;
-      }
-    
-    if (this.world.keyboard.LEFT) {
-      this.moveLeft();
-      this.otherDirection = true;
-      }
-	
+    animatePepe() {
+        this.checkIdleTimer();
+        this.pepeWalking();
+        this.pepeJumping();
+        this.positionCamera();
     }
-	
-	  pepeJumping() {
+
+    
+    animatePepeState() {
+        if (this.isDead() && !this.world.gameOver) {
+            this.playDeath();
+        } else if (this.isHurt() && !this.world.gameOver) {
+            this.playHurtAnimation();
+        } else if (this.isAboveGround()) {
+            this.isJumping();
+        } else {
+            if (!throwingBottle) { 
+                if (this.idleTimer > this.longIdle) {
+                    this.isLongIdle();
+                } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.isWalking();
+                } else {
+                    this.isIdle();
+                }
+            } else {
+                this.loadImage('img/pepe/pepe_idle/idle/I-1.png');
+                this.isIdle();
+                this.idleTimer = 0;
+            }
+        }
+    }
+
+    
+    checkIdleTimer() {
+         
+            this.idleTimer += 1000 / 120;
+    }
+
+    
+    pepeWalking() {
+
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+        }
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+        }
+    }
+
+  
+    pepeJumping() {
         if ((this.world.keyboard.SPACE || this.world.keyboard.UP) && !this.isAboveGround()) {
             this.jump();
             this.idleTimer = 0;
         }
     }
 
+   
     positionCamera() {
         this.world.camera_x = -this.x + 100;
     }
 
+    
+    playDeath() {
+        this.playAnimation(this.IMAGES_DEAD);
+    }
+
+   
+    playHurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+    }
+
+    
     isJumping() {
         this.playAnimation(this.IMAGES_JUMPING);
     }
 
+  
     isLongIdle() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
+   
     isWalking() {
         this.playAnimation(this.IMAGES_WALKING);
     }
 
+   
     isIdle() {
         this.playAnimation(this.IMAGES_IDLE);
     }
-}
+  }

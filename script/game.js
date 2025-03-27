@@ -12,7 +12,6 @@ function init() {
     initLevel();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
- 
 }
 
 
@@ -22,7 +21,6 @@ function resetAnimationFrameId() {
     }
     requestAnimationFrameId = 0;
 }
-
 
 function resetGame() {
     keyboard = new Keyboard();
@@ -34,7 +32,6 @@ function resetGame() {
 function addInterval(interval) {
     intervals.push(interval);
 }
-
 
 function stopAllIntervals() {
     resetAnimationFrameId();

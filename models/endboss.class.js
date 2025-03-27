@@ -1,7 +1,11 @@
 class Endboss extends MoveableObject {
-    height = 200;
-    width = 200;
-    y = 50;
+    height = 400;
+    width = 250;
+    y = 55;
+    energy = 120;
+    isDead = false;
+    hadFirstContact = false;
+    alertAnimationPlayed = false;
 
     IMAGES_WALKING = [
         'img/enemies/enemies_boss/boss_walk/G1.png',
@@ -45,7 +49,6 @@ class Endboss extends MoveableObject {
         'img/enemies/enemies_boss/boss_dead/G26.png'
     ];
 
-
     constructor() {
         super().loadImage('img/enemies/enemies_boss/boss_walk/G1.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -53,6 +56,169 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 400;
-	}
+        this.x = 5000;
+        this.speed = 18;
+        this.offset = { top: 60, right: 20, bottom: 90, left: 20 };
+        this.animationIntervals = [];
+        this.animate();
+    }
+
+
+    animate() {
+        const animationInterval = setInterval(() => {
+            if (this.shouldStartAlert()) {
+                this.startAlertAnimation(animationInterval);
+            }
+        }, 120);
+        this.animationIntervals.push(animationInterval);
+
+        addInterval(animationInterval);
+    }
+
+
+    shouldStartAlert() {
+        return world && world.character.x > 4500 && !this.hadFirstContact;
+    }
+
+    startAlertAnimation(interval) {
+        if (!this.alertAnimationPlayed) {
+            this.alertAnimationInterval = this.startAnimationInterval(this.IMAGES_ALERT, 275, () => {
+                clearInterval(this.alertAnimationInterval);
+                this.alertAnimationPlayed = true;
+                setTimeout(() => {
+                    this.hadFirstContact = true;
+                    this.startWalking();
+                }, 1000);
+            });
+            clearInterval(interval);
+        }
+    }
+
+
+    startHurtAnimation() {
+        if (!this.hurtAnimationInterval) {
+            this.stopMovement();
+            this.hurtAnimationInterval = this.startAnimationInterval(this.IMAGES_HURT, 300, () => {
+                this.resetToWalkingState();
+            });
+        }
+    }
+
+
+    startWalking() {
+        const walkingInterval = setInterval(() => {
+            if (this.energy > 0 && !this.isDead) {
+                this.updateSpeed();
+                this.playAnimation(this.IMAGES_WALKING);
+                this.moveLeft();
+            } else if (this.bossIsDead()) {
+                clearInterval(walkingInterval);
+            }
+        }, 120);
+    }
+
+
+    updateSpeed() {
+        if (this.energy < 60) {
+            this.speed = 24 + Math.random() * 1.2;
+        } else {
+            this.speed;
+        }
+    }
+
+
+    bossIsHit() {
+        this.reduceEnergy();
+        this.startHurtAnimation();
+        this.updateHealthBar();
+    }
+
+    reduceEnergy() {
+        this.energy -= 10;
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
+    }
+
+
+ 
+    resetToWalkingState() {
+        clearInterval(this.hurtAnimationInterval);
+        this.hurtAnimationInterval = null;
+        this.playAnimation(this.IMAGES_WALKING);
+        this.resumeMovementAfterDelay(0.05);
+    }
+
+
+    stopMovement() {
+        this.speed = 0;
+    }
+
+
+    resumeMovementAfterDelay(delay) {
+        setTimeout(() => {
+            this.speed = 16 + Math.random() * 1.2;
+        }, delay * 1000);
+    }
+
+    bossIsDead() {
+        if (this.energy <= 0 && !this.isDead) {
+            this.isDead = true;
+            this.stopAllAnimations();
+            this.startDeathAnimation();
+            setTimeout(() => {
+                showEndScreen();
+            }, 1000);
+            this.clearIntervals();
+        }
+    }
+
+    clearIntervals() {
+        this.animationIntervals.forEach(interval => clearInterval(interval));
+        this.animationIntervals = [];
+        this.animationIntervals.forEach(interval => {
+            const index = intervals.indexOf(interval);
+            if (index !== -1) {
+                intervals.splice(index, 1);
+            }
+        });
+    }
+
+    stopAllAnimations() {
+        clearInterval(this.hurtAnimationInterval);
+        this.stopMovement();
+    }
+
+
+    startDeathAnimation() {
+        this.deathAnimationInterval = this.startAnimationInterval(this.IMAGES_DEAD, 250, () => {
+            this.endDeathAnimation();
+        });
+    }
+
+
+    endDeathAnimation() {
+        clearInterval(this.deathAnimationInterval);
+        this.deathAnimationInterval = null;
+        this.loadImage(this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]);
+    }
+
+
+    updateHealthBar() {
+        world.endbossHealthbar.setPercentage(this.energy);
+    }
+
+
+    startAnimationInterval(images, intervalTime, onComplete = null) {
+        let animationCounter = 0;
+        const animationLength = images.length;
+        return setInterval(() => {
+            this.playAnimation(images);
+            animationCounter++;
+            if (animationCounter / animationLength >= 1) {
+                clearInterval(this.deathAnimationInterval);
+                if (onComplete) onComplete();
+            }
+        }, intervalTime);
+    }
 }

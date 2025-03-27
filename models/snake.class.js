@@ -60,6 +60,5 @@ class Snake extends MoveableObject {
     playDeathAnimation() {
         this.stopIntervals();
         this.playAnimation(this.IMAGES_DEAD);
-        this.death_sound.play();
     }
 }
