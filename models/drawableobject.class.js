@@ -1,3 +1,4 @@
+
 class DrawableObject {
   x = 120;
   y = 365;
@@ -13,40 +14,29 @@ class DrawableObject {
     left: 0,
   };
 
-  /**
-   * Loads an image from the given path and assigns it to the object's 'img' property.
-   * @function
-   * @param {string} path - The path to the image file.
-   */
-  loadImage(path) {
-    this.img = new Image();
-    this.img.src = path;
-  }
 
-  /**
-   * Loads an array of images and stores them in the image cache.
-   * @function
-   * @param {string[]} array - An array of image paths to load.
-   */
-  loadImages(array) {
-    array.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
-    });
-  }
+    loadImage(path) {
+        this.img = new Image();
+        this.img.src = path;
+    }
 
-  /**
-   * Draws the object on the canvas context.
-   * @function
-   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
-   */
-  draw(ctx) {
-    try {
-      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    } catch (e) {}
-  }
-  
+
+    loadImages(array) {
+        array.forEach((path) => {
+            let img = new Image();
+            img.src = path;
+            this.imageCache[path] = img;
+        });
+    }
+
+
+    draw(ctx) {
+        try {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } catch (e) {}
+    }
+
+    
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottles || this instanceof ThrowableObject) {
             ctx.beginPath();
@@ -63,5 +53,20 @@ class DrawableObject {
         }
     }
 
-}
 
+    findIndexPerc(percentage) {
+        if (percentage >= 100) {
+            return 5;
+        } else if (percentage >= 80) {
+            return 4;
+        } else if (percentage >= 60) {
+            return 3;
+        } else if (percentage >= 40) {
+            return 2;
+        } else if (percentage >= 20) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}

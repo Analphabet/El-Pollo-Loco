@@ -1,8 +1,6 @@
-
-
 class ThrowableObject extends MoveableObject {
     speedY = 30;
-    speedX = 30;
+    speedX = 20;
     hasCollided;
     rotationInterval;
 
@@ -34,6 +32,12 @@ class ThrowableObject extends MoveableObject {
         this.throwInterval = null;
         this.throw();
         this.animate();
+        this.offset = {
+            top: 10,
+            right: 10,
+            bottom: 20,
+            left: 10
+        };
     }
 
 
@@ -47,7 +51,7 @@ class ThrowableObject extends MoveableObject {
     }
 
 
-   
+
     animate() {
         this.rotationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
@@ -55,7 +59,6 @@ class ThrowableObject extends MoveableObject {
     }
 
 
-  
     animateBottleSplash() {
         clearInterval(this.rotationInterval);
         this.speedX = 0;
