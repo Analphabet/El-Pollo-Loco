@@ -1,5 +1,5 @@
 let requestAnimationFrameId = 0;
-
+bossEscaped = false;
 
 class World {
     character = new Character();
