@@ -109,6 +109,7 @@ class Character extends MoveableObject {
       this.moveLeft();
       this.otherDirection = true;
       }
+	
     }
 	
 	  pepeJumping() {
@@ -122,4 +123,19 @@ class Character extends MoveableObject {
         this.world.camera_x = -this.x + 100;
     }
 
+    isJumping() {
+        this.playAnimation(this.IMAGES_JUMPING);
+    }
+
+    isLongIdle() {
+        this.playAnimation(this.IMAGES_LONG_IDLE);
+    }
+
+    isWalking() {
+        this.playAnimation(this.IMAGES_WALKING);
+    }
+
+    isIdle() {
+        this.playAnimation(this.IMAGES_IDLE);
+    }
 }

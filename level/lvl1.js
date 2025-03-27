@@ -1,20 +1,72 @@
-class Level {
-    enemies;
-    clouds;
-    backgroundObjects;
-
-    constructor(enemies, clouds, bgObjects) {
-        this.enemies = enemies;
-        this.clouds = clouds;
-        this.backgroundObjects = bgObjects;
-    }
-}
 
 function initLevel() {
-
     level1 = new Level(
         [
             new Chicken(100, 275),
-            new Chicken(3000, 275),
-			])
+            new Chicken(250, 275),
+            new Chick(450, 275),
+            new Chicken(700, 275),
+        ],
+        [
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+        ],
+        [
+            new BackgroundObject('img/layers_bg/air.png', -719),
+            new BackgroundObject('img/layers_bg/third_layer/2.png', -719),
+            new BackgroundObject('img/layers_bg/second_layer/2.png', -719),
+            new BackgroundObject('img/layers_bg/first_layer/2.png', -719),
+            new BackgroundObject('img/layers_bg/air.png', 0),
+            new BackgroundObject('img/layers_bg/third_layer/1.png', 0),
+            new BackgroundObject('img/layers_bg/second_layer/1.png', 0),
+            new BackgroundObject('img/layers_bg/first_layer/1.png', 0),
+            new BackgroundObject('img/layers_bg/air.png', 719),
+            new BackgroundObject('img/layers_bg/third_layer/2.png', 719),
+            new BackgroundObject('img/layers_bg/second_layer/2.png', 719),
+            new BackgroundObject('img/layers_bg/first_layer/2.png', 719),
+            new BackgroundObject('img/layers_bg/air.png', 719 * 2),
+            new BackgroundObject('img/layers_bg/third_layer/1.png', 719 * 2),
+            new BackgroundObject('img/layers_bg/second_layer/1.png', 719 * 2),
+            new BackgroundObject('img/layers_bg/first_layer/1.png', 719 * 2),
+            new BackgroundObject('img/layers_bg/air.png', 719 * 3),
+            new BackgroundObject('img/layers_bg/third_layer/2.png', 719 * 3),
+            new BackgroundObject('img/layers_bg/second_layer/2.png', 719 * 3),
+            new BackgroundObject('img/layers_bg/first_layer/2.png', 719 * 3),
+            new BackgroundObject('img/layers_bg/air.png', 719 * 4),
+            new BackgroundObject('img/layers_bg/third_layer/1.png', 719 * 4),
+            new BackgroundObject('img/layers_bg/second_layer/1.png', 719 * 4),
+            new BackgroundObject('img/layers_bg/first_layer/1.png', 719 * 4),
+            new BackgroundObject('img/layers_bg/air.png', 719 * 5),
+            new BackgroundObject('img/layers_bg/third_layer/2.png', 719 * 5),
+            new BackgroundObject('img/layers_bg/second_layer/2.png', 719 * 5),
+            new BackgroundObject('img/layers_bg/first_layer/2.png', 719 * 5),
+            new BackgroundObject('img/layers_bg/air.png', 719 * 6),
+            new BackgroundObject('img/layers_bg/third_layer/1.png', 719 * 6),
+            new BackgroundObject('img/layers_bg/second_layer/1.png', 719 * 6),
+            new BackgroundObject('img/layers_bg/first_layer/1.png', 719 * 6),
+            new BackgroundObject('img/layers_bg/air.png', 719 * 7),
+            new BackgroundObject('img/layers_bg/third_layer/2.png', 719 * 7),
+            new BackgroundObject('img/layers_bg/second_layer/2.png', 719 * 7),
+            new BackgroundObject('img/layers_bg/first_layer/2.png', 719 * 7),
+        ],
+        [
+            new Coin(0, 200),
+            new Coin(100, 200),
+        ],
+        [
+            new Bottles(0, 375),
+            new Bottles(100, 375),
+        ],
+        [new Endboss()]
+    );
 }
+

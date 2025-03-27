@@ -12,12 +12,8 @@ class Chick {
 
   IMAGES_DEAD = ["img/enemies/enemies_chick/dead.png"];
 
-  death_sound = new Audio("sound/chick-hurt.mp3");
 
   constructor(x) {
-    this.loadImages(this.IMAGES_WALKING);
-    this.loadImages(this.IMAGES_DEAD);
-    this.x = x;
-  
+
   }
 }
