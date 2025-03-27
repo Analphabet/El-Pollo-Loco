@@ -2,10 +2,11 @@ class MoveableObject extends DrawableObject {
     speed = 0.2;
     otherDirection = false;
     speedY = 0;
-    acceleration = 2;
+    acceleration = 2.5;
     energy = 100;
     lastHitTime = 0;
     hitCooldown = 250;
+
 
 
     applyGravity() {
@@ -27,7 +28,6 @@ class MoveableObject extends DrawableObject {
             return this.y < 150;  
         }
     }
-
 
     moveRight() {
         this.x += this.speed;
@@ -66,10 +66,18 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+ hitTimeout() {
+        
+            this.energy -= 100;
+
+            if (this.energy < 0) {
+                this.energy = 0;
+            }
+        }
+
 
     isHurt() {
-        let timePassed = new Date().getTime() - this.lastHitTime;
-        timePassed = timePassed / 1000;
+        const timePassed = (Date.now() - this.lastHitTime) / 1000;  // Time in seconds
         return timePassed < 1;
     }
 
@@ -80,8 +88,8 @@ class MoveableObject extends DrawableObject {
 
 
     playAnimation(images) {
-        let i = this.currentImage % images.length;
-        let path = images[i];
+        const i = this.currentImage % images.length;
+        const path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
     }

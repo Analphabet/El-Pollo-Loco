@@ -1,5 +1,4 @@
 
-
 class Coin extends MoveableObject {
     IMAGES_COINS = [
         'img/coin/coin_1.png',
@@ -13,7 +12,7 @@ class Coin extends MoveableObject {
         this.loadImages(this.IMAGES_COINS);
         this.loadImage('img/coin/coin_1.png');
         this.x = x + 500;
-        this.y = y * Math.random();
+        this.y = y;
         this.width = 100;
         this.height = 100;
         this.offset = {
@@ -31,6 +30,7 @@ class Coin extends MoveableObject {
             this.playAnimation(this.IMAGES_COINS);
         }, 200)
     }
+
 
     stopAnimation() {
         clearInterval(this.animationInterval);

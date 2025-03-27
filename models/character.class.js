@@ -1,3 +1,4 @@
+
 class Character extends MoveableObject {
     // Initial properties for the character
     y = -200;
@@ -83,16 +84,25 @@ class Character extends MoveableObject {
         this.animate();
         this.applyGravity();
         this.jumping = false;
+        this.offset = {
+            top: 40,
+            right: 20,
+            bottom: 20,
+            left: 20
         };
-
-  animate() {
-    intervals.push(
-      setInterval(() => {
-        this.animatePepe();
-      }, 1000 / 60)
-    );}
+    }
 
   
+    animate() {
+        intervals.push(setInterval(() => {
+            this.animatePepe();
+        }, 900 / 60));
+
+        intervals.push(setInterval(() => {
+            this.animatePepeState();
+        }, 100));
+    }
+
     animatePepe() {
         this.checkIdleTimer();
         this.pepeWalking();
@@ -105,11 +115,11 @@ class Character extends MoveableObject {
         if (this.isDead() && !this.world.gameOver) {
             this.playDeath();
         } else if (this.isHurt() && !this.world.gameOver) {
-            this.playHurtAnimation();
+            this.isInjury();
         } else if (this.isAboveGround()) {
             this.isJumping();
         } else {
-            if (!throwingBottle) { 
+            if (!throwingBottle) { // Pepe does not idle if he throws bottles!
                 if (this.idleTimer > this.longIdle) {
                     this.isLongIdle();
                 } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -125,14 +135,17 @@ class Character extends MoveableObject {
         }
     }
 
-    
+   
     checkIdleTimer() {
-         
+        if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
             this.idleTimer += 1000 / 120;
+        } else {
+            this.idleTimer = 0;
+        }
     }
 
-    
     pepeWalking() {
+        this.updateSpeed();  // Update speed based on collected coins
 
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
@@ -157,33 +170,41 @@ class Character extends MoveableObject {
         this.world.camera_x = -this.x + 100;
     }
 
-    
+ 
     playDeath() {
         this.playAnimation(this.IMAGES_DEAD);
+        this.world.endGame();
     }
 
-   
-    playHurtAnimation() {
+  
+    isInjury() {
         this.playAnimation(this.IMAGES_HURT);
     }
 
-    
+
     isJumping() {
         this.playAnimation(this.IMAGES_JUMPING);
     }
 
-  
+   
     isLongIdle() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
-   
+  
     isWalking() {
         this.playAnimation(this.IMAGES_WALKING);
     }
 
-   
+
     isIdle() {
         this.playAnimation(this.IMAGES_IDLE);
     }
-  }
+
+
+    updateSpeed() {
+        const speedIncreaseFactor = 0.3;  // Speed increases by 0.3 for each coin collected
+        this.speed = 5 + this.world.coinBar.collectedCoins * speedIncreaseFactor;
+    }
+}
+

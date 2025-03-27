@@ -1,3 +1,4 @@
+
 class ThrowableObject extends MoveableObject {
     speedY = 30;
     speedX = 20;
@@ -49,7 +50,6 @@ class ThrowableObject extends MoveableObject {
             this.x += 25;
         }, 60);
     }
-
 
 
     animate() {
