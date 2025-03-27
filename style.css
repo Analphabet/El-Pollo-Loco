@@ -32,6 +32,11 @@ h1 {
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+#canvas {
+    border: 2px solid black;  /* Um sicherzustellen, dass das Canvas sichtbar ist */
+    background-color: #f0f0f0;  /* Optional: Hintergrunfarbe für das Canvas */
+}
+
 .canvas-container {
   height: 480px;
   width: 720px;

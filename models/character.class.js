@@ -1,4 +1,4 @@
-class Character {
+class Character extends MoveableObject {
   y = 100;
   height = 200;
   width = 100;
@@ -67,6 +67,7 @@ class Character {
   ];
 
   constructor() {
+	      super().loadImage("img/pepe/pepe_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_DEAD);
@@ -120,4 +121,5 @@ class Character {
     positionCamera() {
         this.world.camera_x = -this.x + 100;
     }
+
 }

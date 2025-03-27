@@ -1,3 +1,4 @@
+
 class MoveableObject extends DrawableObject {
     speed = 0.5;
     otherDirection = false;
@@ -53,3 +54,4 @@ class MoveableObject extends DrawableObject {
         );
     }
   }
+  
