@@ -76,6 +76,16 @@ function showGameLostScreen(endScreen, mobileButtonContainer) {
     endScreen.style.backgroundImage = "url('img/winlose/You_lost_a.png')";
 }
 
+function openControls() {
+    document.getElementById('controlsScreen').style.display = 'block';
+    document.getElementById('menu-buttons').style.display = 'none';
+}
+
+function closeControls() {
+    document.getElementById('controlsScreen').style.display = 'none';
+    document.getElementById('menu-buttons').style.display = 'flex';
+}
+
 function openSettings() {
     document.getElementById('settingsScreen').style.display = 'block';
     document.getElementById('menu-buttons').style.display = 'none';
@@ -86,5 +96,14 @@ function closeSettings() {
     document.getElementById('menu-buttons').style.display = 'flex';
 }
 
+function openItems() {
+    document.getElementById('itemsScreen').style.display = 'flex';
+    document.getElementById('menu-buttons').style.display = 'none';
+}
+
+function closeItems() {
+    document.getElementById('itemsScreen').style.display = 'none';
+    document.getElementById('menu-buttons').style.display = 'flex';
+}
 
 

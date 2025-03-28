@@ -40,6 +40,8 @@
         <div id="startScreen" class="start-screen" style="display:flex">
             <div id="menu-buttons" class="menu-buttons">
                 <button class="button-control" onclick="init()">Play</button>
+				<button class="button-control" onclick="openControls()">Controls</button>
+                <button class="button-control" onclick="openItems()">items</button>
                 <button class="button-control" onclick="openSettings()">Settings</button>
             </div>
         </div>
@@ -51,12 +53,75 @@
 <button id="toggle-boss-difficulty-button" class="button-control" onclick="toggleDifficulty()">Boss: Normal</button>
                 </div>
         </div>
+		<div id="controlsScreen" class="controls-screen">
+            <div class="button-container">
+                <button class="button-control" onclick="closeControls()">Back</button>
+            </div>
+            <div class="fs-centered">
+                <div class="screen-title">
+                    <h2>Controls</h2>
+                </div>
+                <div class="controls">
+                    <div class="controls-container">
+                        <div class="box jc-center">
+                        </div>
+                        <div class="box jc-center">
+                        </div>
+                        <div class="box jc-center">
+                            D
+                        </div>
+                    </div>
+                    <div class="controls-container">
+                        <div class="box jc-left">
+                            <span>Use LEFT | RIGHT Arrow Keys to move left | right</span>
+                        </div>
+                        <div class="box jc-left">
+                            <span>Press <b>SPACE</b> or use <b>UP</b> to jump</span>
+                        </div>
+                        <div class="box jc-left">
+                            <span>Press <b>D</b> to throw salsa bottles</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+		 <div id="itemsScreen" class="items-container" style="display:none">
+            <div class="button-container">
+                <button class="button-control" onclick="closeItems()">Back</button>
+            </div>
+            <div class="fs-centered">
+                <div class="screen-title">
+                    <h2>Items</h2>
+                </div>
+                <div class="items">
+				
+					<div class="controls-container">
+                        <div class="box jc-center">
+                        </div>
+                        <div class="box jc-center">
+                        </div>
+                    </div>
+				
+                    <div class="controls-container">
+                        <div class="box jc-left">
+                            <span>Collect Coins to increase Pepes speed. Where can he buy some?</span>
+                        </div>
+                        <div class="box jc-left">
+                            <span class="p20-top">Every fiesta needs some salsa chicken. Avenge the death of the fallen muchachos and throw hot stuff at enemies. On the other hand, tabasco bottles growing in the desert might be a rare occasion.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
         
         <div id="endScreen" class="end-screen" style="display:none">
             <button class="button-control" onclick="returnToMenu()">Back to Menu</button>
         </div>
         <div id="content" class="content" style="display:none">
+<div id="timerDisplay" class="timer-display">
+    Time Left: 99 seconds
+</div>
             <canvas width="720" height="480" id="canvas"></canvas>
         </div>
 </body>

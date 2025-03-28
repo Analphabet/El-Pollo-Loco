@@ -79,6 +79,9 @@ canvas {
   -webkit-backdrop-filter: blur(5px);
 }
 
+
+.controls-screen,
+.items-container,
 .settings-screen {
     display: none;
 	height: 480px;
@@ -97,6 +100,15 @@ canvas {
     flex-direction: column;
 }
 
+.items-container {
+    flex-direction: column;
+}
+
+.items-container
+.box img {
+    width: 80px;
+}
+
 .screen-title {
     display: flex;
     justify-content: center;
@@ -108,6 +120,22 @@ canvas {
     margin-block-start: 0.5em;
     margin-block-end: 0.7em;
 	letter-spacing: 1px;
+}
+
+.controls,
+.items {
+    display: flex;
+    justify-content: center;
+    margin-left: 100px;
+    margin-right: 100px;
+	letter-spacing: 1px;
+}
+
+.items {
+    font-size: 26px;
+    font-weight: 700;
+    hyphens: auto;
+    text-align: justify;
 }
 
 .p20-top {
