@@ -28,9 +28,11 @@
 	<script src="./script/audio.js"></script>
 	<script src="./script/eventListeners.js"></script>
 	<script src="./script/game.js"></script>
+
 </head>
 
 <body>
+   
     <div class="title">
         <h1>El Pollo Loco</h1>
     </div>
@@ -39,28 +41,23 @@
             <div id="menu-buttons" class="menu-buttons">
                 <button class="button-control" onclick="init()">Play</button>
                 <button class="button-control" onclick="openSettings()">Settings</button>
-				<button id="toggle-boss-difficulty-button" class="button-control" onclick="toggleDifficulty()">Boss: Normal</button>
-
             </div>
         </div>
         <div id="settingsScreen" class="settings-screen" style="display:none">
             <div class="button-container">
                 <button class="button-control" onclick="closeSettings()">Back</button>
             </div>
-                <div id="settings" class="settings"> 
-				
+                <div id="settings" class="settings">
+<button id="toggle-boss-difficulty-button" class="button-control" onclick="toggleDifficulty()">Boss: Normal</button>
                 </div>
-
         </div>
-     
+        </div>
+        
         <div id="endScreen" class="end-screen" style="display:none">
             <button class="button-control" onclick="returnToMenu()">Back to Menu</button>
         </div>
         <div id="content" class="content" style="display:none">
-
             <canvas width="720" height="480" id="canvas"></canvas>
-        </div>
-       
         </div>
 </body>
 

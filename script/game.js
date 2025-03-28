@@ -70,12 +70,10 @@ function showEndScreen() {
 
 function showGameWonScreen(endScreen, mobileButtonContainer) {
     endScreen.style.backgroundImage = "url('img/winlose/you win.jpg')";
-    mobileButtonContainer.style.display = 'none';
 }
 
 function showGameLostScreen(endScreen, mobileButtonContainer) {
     endScreen.style.backgroundImage = "url('img/winlose/You_lost_a.png')";
-    mobileButtonContainer.style.display = 'none';
 }
 
 function openSettings() {
