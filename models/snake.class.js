@@ -1,4 +1,5 @@
 
+
 class Snake extends MoveableObject {
   y = 370;
   height = 50;
@@ -15,11 +16,12 @@ class Snake extends MoveableObject {
     "img/enemies/enemies_snake/snake_attack/Barrel snake7 transparent.png",
   ];
 
-  IMAGES_DEAD = ["img/enemies/enemies_snake/snake_dead/snake_dead.png"];
-  constructor(x) {
-    super().loadImage(
-      "img/enemies/enemies_snake/snake_attack/Barrel snake1 transparent.png"
-    );
+    IMAGES_DEAD = [
+        'img/enemies/enemies_snake/snake_dead/snake_dead.png'
+    ];
+
+    constructor(x) {
+        super().loadImage('img/enemies/enemies_snake/snake_attack/Barrel snake1 transparent.png');
         this.loadImages(this.IMAGES_ATTACKING);
         this.loadImages(this.IMAGES_DEAD);
         this.x = x;
@@ -51,11 +53,11 @@ class Snake extends MoveableObject {
     }
 
 
-   
     stopIntervals() {
         clearInterval(this.movementInterval);
         clearInterval(this.animationInterval);
     }
+
 
     playDeathAnimation() {
         this.stopIntervals();

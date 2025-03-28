@@ -1,9 +1,13 @@
-let canvas;
+
+let canvas; 
 let world;
 let gameActive = true;
+let bossEscaped = false;
 let throwingBottle = false;
 let keyboard = new Keyboard();
 let intervals = [];
+
+
 
 
 function init() {
@@ -12,6 +16,8 @@ function init() {
     initLevel();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
+
+
 }
 
 
@@ -22,38 +28,18 @@ function resetAnimationFrameId() {
     requestAnimationFrameId = 0;
 }
 
+
 function resetGame() {
     keyboard = new Keyboard();
     intervals = [];
     world = null;
 }
 
-function showGameWonScreen(endScreen, mobileButtonContainer) {
-    endScreen.style.backgroundImage = "url('img/layers_bg/you win.jpg')";
-    mobileButtonContainer.style.display = 'none';
-}
-
-function showGameLostScreen(endScreen, mobileButtonContainer) {
-    endScreen.style.backgroundImage = "url('img/layers_bg/you lost.png')";
-    mobileButtonContainer.style.display = 'none';
-}
-
-function showEndScreen() {
-    gameActive = false;
-    const endScreen = document.getElementById('endScreen');
-    const mobileButtonContainer = document.querySelector('.mobile-button-container');
-    if (world.isEndbossDefeated()) {
-        showGameWonScreen(endScreen, mobileButtonContainer);
-    } else {
-        showGameLostScreen(endScreen, mobileButtonContainer);
-    }
-    endScreen.style.display = 'flex';
-    stopAllIntervals();
-}
 
 function addInterval(interval) {
     intervals.push(interval);
 }
+
 
 function stopAllIntervals() {
     resetAnimationFrameId();
@@ -61,4 +47,28 @@ function stopAllIntervals() {
         clearInterval(intervalId);
     });
     intervals = [];
+}
+
+
+
+function showGameWonScreen(endScreen, mobileButtonContainer) {
+    endScreen.style.backgroundImage = "url('img/layers_bg/you win.jpg')";
+}
+
+
+function showGameLostScreen(endScreen) {
+    endScreen.style.backgroundImage = "url('img/layers_bg/you lost.png')";
+}
+
+
+function showEndScreen() {
+    gameActive = false;
+    const endScreen = document.getElementById('endScreen');
+    if (world.checkEndbossDefeated()) {
+        showGameWonScreen(endScreen);
+    } else {
+        showGameLostScreen(endScreen);
+    }
+    endScreen.style.display = 'flex';
+    stopAllIntervals();
 }

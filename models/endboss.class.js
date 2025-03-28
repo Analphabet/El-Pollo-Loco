@@ -1,3 +1,4 @@
+
 class Endboss extends MoveableObject {
     height = 400;
     width = 250;
@@ -49,6 +50,7 @@ class Endboss extends MoveableObject {
         'img/enemies/enemies_boss/boss_dead/G26.png'
     ];
 
+
     constructor() {
         super().loadImage('img/enemies/enemies_boss/boss_walk/G1.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -57,7 +59,7 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 5000;
-        this.speed = 18;
+        this.speed = 40;
         this.offset = { top: 60, right: 20, bottom: 90, left: 20 };
         this.animationIntervals = [];
         this.animate();
@@ -79,6 +81,7 @@ class Endboss extends MoveableObject {
     shouldStartAlert() {
         return world && world.character.x > 4500 && !this.hadFirstContact;
     }
+
 
     startAlertAnimation(interval) {
         if (!this.alertAnimationPlayed) {
@@ -120,7 +123,7 @@ class Endboss extends MoveableObject {
 
     updateSpeed() {
         if (this.energy < 60) {
-            this.speed = 24 + Math.random() * 1.2;
+            this.speed = 50 + Math.random() * 1.2;
         } else {
             this.speed;
         }
@@ -133,15 +136,16 @@ class Endboss extends MoveableObject {
         this.updateHealthBar();
     }
 
-    reduceEnergy() {
-        this.energy -= 10;
+      reduceEnergy() {
+        const damage = isEasyMode ? 20 : 10; // Schaden je nach Modus
+        this.energy -= damage;
         if (this.energy < 0) {
             this.energy = 0;
         }
+        this.updateHealthBar(); // Healthbar aktualisieren nach Schaden
     }
 
 
- 
     resetToWalkingState() {
         clearInterval(this.hurtAnimationInterval);
         this.hurtAnimationInterval = null;
@@ -157,9 +161,10 @@ class Endboss extends MoveableObject {
 
     resumeMovementAfterDelay(delay) {
         setTimeout(() => {
-            this.speed = 16 + Math.random() * 1.2;
+            this.speed = 35 + Math.random() * 1.2;
         }, delay * 1000);
     }
+
 
     bossIsDead() {
         if (this.energy <= 0 && !this.isDead) {
@@ -172,6 +177,7 @@ class Endboss extends MoveableObject {
             this.clearIntervals();
         }
     }
+
 
     clearIntervals() {
         this.animationIntervals.forEach(interval => clearInterval(interval));
@@ -203,7 +209,6 @@ class Endboss extends MoveableObject {
         this.loadImage(this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1]);
     }
 
-
     updateHealthBar() {
         world.endbossHealthbar.setPercentage(this.energy);
     }
@@ -221,4 +226,26 @@ class Endboss extends MoveableObject {
             }
         }, intervalTime);
     }
+}
+
+
+isEasyMode = false; // Standardmäßig auf Normalmodus
+
+function updateDifficultyStatus() {
+    // Toggle den Schwierigkeitsgrad (zwischen Normal und Easy)    
+    // Hole den Button für den Schwierigkeitsgrad
+    let difficultyToggleButton = document.getElementById('toggle-boss-difficulty-button');
+    
+    // Ändere den Text des Buttons basierend auf dem aktuellen Schwierigkeitsgrad
+    if (isEasyMode) {
+        difficultyToggleButton.innerText = 'Boss: Easy'; // Wenn Easy aktiviert ist
+    } else {
+        difficultyToggleButton.innerText = 'Boss: Normal'; // Wenn Normal aktiviert ist
+    }
+}
+
+
+ function toggleDifficulty() {
+    isEasyMode = !isEasyMode; // Toggle zwischen Easy und Normal
+    updateDifficultyStatus();
 }
