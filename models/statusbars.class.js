@@ -23,7 +23,6 @@ class Statusbar extends DrawableObject {
     }
 
 
-    
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_HEALTH[this.findIndexPerc(this.percentage)];
@@ -35,6 +34,7 @@ class Statusbar extends DrawableObject {
 class EndbossHealthbar extends DrawableObject {
     IMAGES_BOSS_HEALTH = [
         'img/statusbar/status_boss/0.png',
+		'img/statusbar/status_boss/10.png',
         'img/statusbar/status_boss/20.png',
         'img/statusbar/status_boss/40.png',
         'img/statusbar/status_boss/60.png',
@@ -55,11 +55,29 @@ class EndbossHealthbar extends DrawableObject {
         this.setPercentage(this.bossEnergy);
     }
 
+findBossIndexPerc(percentage) {
+        if (percentage >= 100) {
+            return 6;
+        } else if (percentage >= 80) {
+            return 5;
+        } else if (percentage >= 60) {
+            return 4;
+        } else if (percentage >= 40) {
+            return 3;
+        } else if (percentage >= 20) {
+            return 2;
+        } else if (percentage > 0) {
+            return 1;
+        } else { 
+			return 0;
+		}	
+    }
+
 
     setPercentage(bossEnergy) {
         this.bossEnergy = bossEnergy;
         let percentage = (this.bossEnergy / 100) * 100;
-        let path = this.IMAGES_BOSS_HEALTH[this.findIndexPerc(percentage)];
+        let path = this.IMAGES_BOSS_HEALTH[this.findBossIndexPerc(percentage)];
         this.img = this.imageCache[path];
     }
 }

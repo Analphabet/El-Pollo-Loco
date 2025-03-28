@@ -72,6 +72,8 @@ class Character extends MoveableObject {
     ];
 
     world;
+    walking_sound = new Audio('sound/Steps_dirt-003.ogg');
+    hurt_sound = new Audio('sound/ouch.mp3');
 
     constructor() {
         super().loadImage('img/pepe/pepe_walk/W-21.png');
@@ -92,15 +94,30 @@ class Character extends MoveableObject {
         };
     }
 
-  
+    bossHit() {
+        const currentTime = new Date().getTime();
+        if (currentTime - this.lastHitTime > this.hitCooldown) {
+            this.lastHitTime = currentTime;
+    
+            // Schaden anpassen je nach Schwierigkeitsgrad
+            const damage = isEasyMode ? 20 : 35;  // 20 Schaden im Easy Mode, 35 Schaden im Normal Mode
+            this.energy -= damage;
+    
+            if (this.energy < 0) {
+                this.energy = 0;
+            }
+    }
+    }
+
+
     animate() {
         intervals.push(setInterval(() => {
             this.animatePepe();
-        }, 900 / 60));
+        }, 1000 / 60));
 
         intervals.push(setInterval(() => {
             this.animatePepeState();
-        }, 100));
+        }, 90));
     }
 
     animatePepe() {
@@ -110,26 +127,25 @@ class Character extends MoveableObject {
         this.positionCamera();
     }
 
-    
     animatePepeState() {
-        if (this.isDead() && !this.world.gameOver) {
-            this.playDeath();
+        if (this.isDead()) {
+            this.triggerDeath();
         } else if (this.isHurt() && !this.world.gameOver) {
-            this.isInjury();
-        } else if (this.isAboveGround()) {
-            this.isJumping();
+            this.handleInjury();
+        } else if (this.handleAboveGround()) {
+            this.handleJumping();
         } else {
-            if (!throwingBottle) { // Pepe does not idle if he throws bottles!
+            if (!throwingBottle) { 
                 if (this.idleTimer > this.longIdle) {
-                    this.isLongIdle();
+                    this.handleLongIdle();
                 } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.isWalking();
+                    this.handleWalking();
                 } else {
-                    this.isIdle();
+                    this.handleIdle();
                 }
             } else {
                 this.loadImage('img/pepe/pepe_idle/idle/I-1.png');
-                this.isIdle();
+                this.handleIdle();
                 this.idleTimer = 0;
             }
         }
@@ -144,63 +160,72 @@ class Character extends MoveableObject {
         }
     }
 
-    pepeWalking() {
-        this.updateSpeed();  // Update speed based on collected coins
+   
 
-        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-            this.moveRight();
-            this.otherDirection = false;
-        }
-        if (this.world.keyboard.LEFT && this.x > 0) {
-            this.moveLeft();
-            this.otherDirection = true;
-        }
-    }
-
-  
     pepeJumping() {
-        if ((this.world.keyboard.SPACE || this.world.keyboard.UP) && !this.isAboveGround()) {
+        if ((this.world.keyboard.SPACE || this.world.keyboard.UP) && !this.handleAboveGround()) {
             this.jump();
             this.idleTimer = 0;
         }
+        if     (this.handleAboveGround()) {
+			if (!this.walking_sound.paused) {
+            this.walking_sound.pause();
+        }
     }
+}
 
-   
+  pepeWalking() {
+    this.updateSpeed();  // Update speed based on collected coins
+
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+        this.moveRight();
+        this.otherDirection = false;
+}
+
+    if (this.world.keyboard.LEFT && this.x > 0) {
+        this.moveLeft();
+        this.otherDirection = true;
+}
+}
+
+
+
     positionCamera() {
         this.world.camera_x = -this.x + 100;
     }
 
- 
-    playDeath() {
-        this.playAnimation(this.IMAGES_DEAD);
-        this.world.endGame();
-    }
 
-  
-    isInjury() {
+    triggerDeath() {
+
+    this.playAnimation(this.IMAGES_DEAD);
+
+    // Aufruf der terminateGame-Methode, die den Endscreen anzeigt
+        if (this.world) {
+		this.world.terminateGame();
+		}
+}
+
+    handleInjury() {
         this.playAnimation(this.IMAGES_HURT);
+        this.hurt_sound.play();
     }
 
-
-    isJumping() {
+    handleJumping() {
         this.playAnimation(this.IMAGES_JUMPING);
     }
 
-   
-    isLongIdle() {
+    handleLongIdle() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
-  
-    isWalking() {
+
+    handleWalking() {
         this.playAnimation(this.IMAGES_WALKING);
     }
 
-
-    isIdle() {
+    handleIdle() {
         this.playAnimation(this.IMAGES_IDLE);
     }
-
 
     updateSpeed() {
         const speedIncreaseFactor = 0.3;  // Speed increases by 0.3 for each coin collected

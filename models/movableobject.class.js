@@ -11,14 +11,14 @@ class MoveableObject extends DrawableObject {
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0)
+            if (this.handleAboveGround() || this.speedY > 0)
                 this.y -= this.speedY;
             this.speedY -= this.acceleration;
         }, 1000 / 40);
     }
 
 
-    isAboveGround() {
+    handleAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
         } else {
@@ -44,12 +44,12 @@ class MoveableObject extends DrawableObject {
     }
 
 
-    isColliding(mo) {
+    handleCollision(mo) {
         return (
-            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+            this.x + this.width +20 - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height +20 - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width -20 - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height -20 - mo.offset.bottom
         );
     }
 
@@ -65,15 +65,6 @@ class MoveableObject extends DrawableObject {
             }
         }
     }
-
- hitTimeout() {
-        
-            this.energy -= 100;
-
-            if (this.energy < 0) {
-                this.energy = 0;
-            }
-        }
 
 
     isHurt() {

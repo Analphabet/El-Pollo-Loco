@@ -44,12 +44,22 @@ class Endboss extends MoveableObject {
         'img/enemies/enemies_boss/boss_attack/G20.png'
     ];
 
+IMAGES_HURT = [
+        'img/enemies/enemies_boss/boss_hurt/G21.png',
+        'img/enemies/enemies_boss/boss_hurt/G22.png',
+        'img/enemies/enemies_boss/boss_hurt/G23.png',
+		'img/enemies/enemies_boss/boss_hurt/G24.png'
+    ];
+
     IMAGES_DEAD = [
         'img/enemies/enemies_boss/boss_dead/G24.png',
         'img/enemies/enemies_boss/boss_dead/G25.png',
-        'img/enemies/enemies_boss/boss_dead/G26.png'
+        'img/enemies/enemies_boss/boss_dead/G26.png',
     ];
 
+    alert_sound = new Audio('sound/rooster-cry-chicken.mp3');
+    hurt_sound = new Audio('sound/chicken-noise-196746.mp3');
+    dead_sound = new Audio('sound/chicken-single-alarm-call-6056.mp3');
 
     constructor() {
         super().loadImage('img/enemies/enemies_boss/boss_walk/G1.png');
@@ -66,12 +76,13 @@ class Endboss extends MoveableObject {
     }
 
 
+
     animate() {
         const animationInterval = setInterval(() => {
             if (this.shouldStartAlert()) {
                 this.startAlertAnimation(animationInterval);
             }
-        }, 120);
+        }, 50);
         this.animationIntervals.push(animationInterval);
 
         addInterval(animationInterval);
@@ -85,12 +96,14 @@ class Endboss extends MoveableObject {
 
     startAlertAnimation(interval) {
         if (!this.alertAnimationPlayed) {
+            this.alert_sound.play();
             this.alertAnimationInterval = this.startAnimationInterval(this.IMAGES_ALERT, 275, () => {
                 clearInterval(this.alertAnimationInterval);
                 this.alertAnimationPlayed = true;
                 setTimeout(() => {
                     this.hadFirstContact = true;
                     this.startWalking();
+
                 }, 1000);
             });
             clearInterval(interval);
@@ -98,9 +111,12 @@ class Endboss extends MoveableObject {
     }
 
 
+
+    
     startHurtAnimation() {
         if (!this.hurtAnimationInterval) {
             this.stopMovement();
+            this.hurt_sound.play();
             this.hurtAnimationInterval = this.startAnimationInterval(this.IMAGES_HURT, 300, () => {
                 this.resetToWalkingState();
             });
@@ -117,18 +133,17 @@ class Endboss extends MoveableObject {
             } else if (this.bossIsDead()) {
                 clearInterval(walkingInterval);
             }
-        }, 120);
+        }, 99);
     }
 
 
     updateSpeed() {
         if (this.energy < 60) {
-            this.speed = 50 + Math.random() * 1.2;
+            this.speed = 50 + Math.random() * 1.15;
         } else {
             this.speed;
         }
     }
-
 
     bossIsHit() {
         this.reduceEnergy();
@@ -170,10 +185,11 @@ class Endboss extends MoveableObject {
         if (this.energy <= 0 && !this.isDead) {
             this.isDead = true;
             this.stopAllAnimations();
+            this.dead_sound.play();
             this.startDeathAnimation();
             setTimeout(() => {
                 showEndScreen();
-            }, 1000);
+            }, 1500);
             this.clearIntervals();
         }
     }
@@ -194,7 +210,6 @@ class Endboss extends MoveableObject {
         clearInterval(this.hurtAnimationInterval);
         this.stopMovement();
     }
-
 
     startDeathAnimation() {
         this.deathAnimationInterval = this.startAnimationInterval(this.IMAGES_DEAD, 250, () => {

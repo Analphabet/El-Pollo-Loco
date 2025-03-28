@@ -7,19 +7,14 @@ let throwingBottle = false;
 let keyboard = new Keyboard();
 let intervals = [];
 
-
-
-
 function init() {
     resetGame();
     gameActive = true;
     initLevel();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
-
-
+    hideScreens();
 }
-
 
 function resetAnimationFrameId() {
     if (requestAnimationFrameId !== 0) {
@@ -28,13 +23,11 @@ function resetAnimationFrameId() {
     requestAnimationFrameId = 0;
 }
 
-
 function resetGame() {
     keyboard = new Keyboard();
     intervals = [];
     world = null;
 }
-
 
 function addInterval(interval) {
     intervals.push(interval);
@@ -50,16 +43,18 @@ function stopAllIntervals() {
 }
 
 
-
-function showGameWonScreen(endScreen, mobileButtonContainer) {
-    endScreen.style.backgroundImage = "url('img/layers_bg/you win.jpg')";
+function returnToMenu() {
+    stopAllIntervals();
+    document.getElementById('endScreen').style.display = 'none';
+    document.getElementById('startScreen').style.display = 'flex';
+    document.getElementById('menu-buttons').style.display = 'flex';
 }
 
-
-function showGameLostScreen(endScreen) {
-    endScreen.style.backgroundImage = "url('img/layers_bg/you lost.png')";
+function hideScreens() {
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    document.getElementById('endScreen').style.display = 'none';
 }
-
 
 function showEndScreen() {
     gameActive = false;
@@ -72,3 +67,26 @@ function showEndScreen() {
     endScreen.style.display = 'flex';
     stopAllIntervals();
 }
+
+function showGameWonScreen(endScreen, mobileButtonContainer) {
+    endScreen.style.backgroundImage = "url('img/winlose/you win.jpg')";
+    mobileButtonContainer.style.display = 'none';
+}
+
+function showGameLostScreen(endScreen, mobileButtonContainer) {
+    endScreen.style.backgroundImage = "url('img/winlose/You_lost_a.png')";
+    mobileButtonContainer.style.display = 'none';
+}
+
+function openSettings() {
+    document.getElementById('settingsScreen').style.display = 'block';
+    document.getElementById('menu-buttons').style.display = 'none';
+}
+
+function closeSettings() {
+    document.getElementById('settingsScreen').style.display = 'none';
+    document.getElementById('menu-buttons').style.display = 'flex';
+}
+
+
+

@@ -14,6 +14,7 @@ class Chicken extends MoveableObject {
         'img/enemies/enemies_chicken/chicken_dead/dead.png'
     ];
 
+    death_sound = new Audio('sound/chicken-bawk-hurt.mp3');
 
     constructor(x) {
         super().loadImage('img/enemies/enemies_chicken/chicken_walk/1_w.png');
@@ -56,8 +57,9 @@ class Chicken extends MoveableObject {
     }
 
 
-    playDeathAnimation() {
+    triggerDeathAnimation() {
         this.stopIntervals();
         this.playAnimation(this.IMAGES_DEAD);
+        this.death_sound.play();
     }
 }

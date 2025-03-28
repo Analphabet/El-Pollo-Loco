@@ -7,49 +7,61 @@
     <title>El pollo loco</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" type="image/x-icon" href="img/salsa/salsa_bottle.png">
-	<script src="./models/drawableObject.class.js"></script>
-	<script src="./models/movableObject.class.js"></script>
-	<script src="./models/backgroundObject.class.js"></script>
+    <script src="./models/drawableObject.class.js"></script>
+    <script src="./models/movableObject.class.js"></script>
 	<script src="./models/character.class.js"></script>
-    <script src="./models/chicken.class.js"></script>
-    <script src="./models/chick.class.js"></script>
-    <script src="./models/snake.class.js"></script>	
+	<script src="./models/chicken.class.js"></script>
+	<script src="./models/chick.class.js"></script>
+    <script src="./models/snake.class.js"></script>
 	<script src="./models/cloud.class.js"></script>
-    <script src="./models/bottle.class.js"></script>
-	<script src="./models/coin.class.js"></script>
-	<script src="./models/keyboard.class.js"></script>
-    <script src="./models/endboss.class.js"></script>
 	<script src="./models/statusbars.class.js"></script>
+	<script src="./models/coin.class.js"></script>
+    <script src="./models/bottle.class.js"></script>
+	<script src="./models/world.class.js"></script>
+	<script src="./models/keyboard.class.js"></script>
+	<script src="./models/endboss.class.js"></script>
+	<script src="./models/collisionHandler.class.js"></script>
+    <script src="./models/backgroundObject.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./models/throwableObject.class.js"></script>
-	<script src="./models/world.class.js"></script>
-	<script src="./models/collisionHelper.class.js"></script>
     <script src="./level/lvl1.js"></script>
-    <script src="./script/game.js"></script>
-    <script src="./script/eventListeners.js"></script>    
-
+	<script src="./script/audio.js"></script>
+	<script src="./script/eventListeners.js"></script>
+	<script src="./script/game.js"></script>
 </head>
 
 <body>
- 
+    <div class="title">
+        <h1>El Pollo Loco</h1>
+    </div>
     <div id="canvas-container" class="canvas-container">
         <div id="startScreen" class="start-screen" style="display:flex">
-            <div
+            <div id="menu-buttons" class="menu-buttons">
                 <button class="button-control" onclick="init()">Play</button>
+                <button class="button-control" onclick="openSettings()">Settings</button>
+				<button id="toggle-boss-difficulty-button" class="button-control" onclick="toggleDifficulty()">Boss: Normal</button>
+
             </div>
         </div>
-      
-<button id="toggle-boss-difficulty-button" class="button-control" onclick="toggleDifficulty()">Boss: Normal</button>
-       
-          
+        <div id="settingsScreen" class="settings-screen" style="display:none">
+            <div class="button-container">
+                <button class="button-control" onclick="closeSettings()">Back</button>
+            </div>
+                <div id="settings" class="settings"> 
+				
+                </div>
+
         </div>
-      <div id="endScreen" class="end-screen" style="display:none">
+     
+        <div id="endScreen" class="end-screen" style="display:none">
             <button class="button-control" onclick="returnToMenu()">Back to Menu</button>
         </div>
-        <div id="content" class="content">
+        <div id="content" class="content" style="display:none">
+
             <canvas width="720" height="480" id="canvas"></canvas>
         </div>
        
+        </div>
 </body>
 
 </html>

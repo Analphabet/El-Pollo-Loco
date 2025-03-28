@@ -6,6 +6,7 @@ class World {
     endbossHealthbar = new EndbossHealthbar();
     statusBar = new Statusbar();
     gameOver = false;
+    bossEscaped = false;
     throwableObjects = [];
     level = level1;
     canvas;
@@ -32,7 +33,6 @@ class World {
         this.character.world = this;
     }
 
-   
     run() {
         setInterval(() => {
             this.handleCoinCollection();
@@ -40,27 +40,26 @@ class World {
             this.checkThrowBottlePossible();
             this.checkCollisions();
             this.handleBottleHitEndbossCollision();
-			this.checkEndbossEscaped();
-
+            this.checkEndbossEscaped();
         }, 10);
     }
 
-   checkCollisions() {
+
+    triggerEnemyDeathAnimation(enemy) {
+        if (enemy.energy === 0) {
+            enemy.triggerDeathAnimation();
+        }
+    }
+
+    checkCollisions() {
         this.collisionHandler.handleCharacterEnemyCollisions();
         this.collisionHandler.handleCharacterEndbossCollision();
     }
 
 
-    playEnemyDeathAnimation(enemy) {
-        if (enemy.energy === 0) {
-            enemy.playDeathAnimation();
-        }
-    }
-
-
     handleCoinCollection() {
         this.level.coins.forEach((coin, index) => {
-            if (this.character.isColliding(coin)) {
+            if (this.character.handleCollision(coin)) {
                 this.level.coins.splice(index, 1);
                 this.coinBar.setCollectedCoins(this.coinBar.collectedCoins + 1);
                 coin.stopAnimation();
@@ -68,10 +67,9 @@ class World {
         });
     }
 
-   
     handleBottleCollection() {
         this.level.bottles.forEach((bottle, index) => {
-            if (this.character.isColliding(bottle)) {
+            if (this.character.handleCollision(bottle)) {
                 this.level.bottles.splice(index, 1);
                 this.bottleBar.setCollectedBottles(this.bottleBar.collectedBottles + 1);
             }
@@ -92,17 +90,16 @@ class World {
 
     handleBottleHitEndbossCollision() {
         this.throwableObjects.forEach((bottle, index) => {
-            if (this.isBottleCollidingWithEndboss(bottle)) {
+            if (this.handleBottleCollisionWithEndboss(bottle)) {
                 this.handleBottleEndbossCollision(bottle, index);
             }
         });
     }
 
-    isBottleCollidingWithEndboss(bottle) {
-        return !bottle.hasCollided && this.level.endboss[0].isColliding(bottle);
+    handleBottleCollisionWithEndboss(bottle) {
+        return !bottle.hasCollided && this.level.endboss[0].handleCollision(bottle);
     }
 
-  
     handleBottleEndbossCollision(bottle, index) {
         bottle.hasCollided = true;
         this.level.endboss[0].bossIsHit();
@@ -112,11 +109,9 @@ class World {
         }, 1000);
     }
 
-   
     removeBottleAfterCollision(index) {
         this.throwableObjects.splice(index, 1);
     }
-
 
     handleCollision() {
         this.character.hit();
@@ -131,36 +126,44 @@ class World {
         }
     }
 
-   
     checkEndbossDefeated() {
         return this.level.endboss[0] && this.level.endboss[0].isDead;
     }
 
-	checkEndbossEscaped() {
-        if( this.level.endboss[0].x <= 0) {
-           gameActive = false;
-           bossEscaped = true;
-           showEndScreen()
-
-           setInterval(() => {
-            this.level.endboss[0].x = 5000;
-           }, 200);
+    checkEndbossEscaped() {
+        const endboss = this.level.endboss[0];
+    
+        // Wenn der Endboss den Bildschirm verlassen hat (x <= 0)
+        if (endboss.x <= 0) {
+            // Setze die Position des Endbosses zurück auf x = 5000
+            endboss.x = 4900;
+            endboss.y = 55;  // Falls du auch die y-Position zurücksetzen möchtest
+            endboss.isDead = false;  // Wenn der Endboss wieder lebendig sein soll
+            endboss.hadFirstContact = true;  // Wenn der erste Kontakt zurückgesetzt werden soll
+            endboss.alertAnimationPlayed = true;  // Animation zurücksetzen
         }
     }
 
+    /**
+     * Checks if Pepe is dead (out of energy).
+     */
     checkPepeDead() {
         return this.character && this.character.energy <= 0;
     }
 
-   
-    endGame() {
-        if (!this.gameOver) {
-            this.gameOver = true;
-            this.bottleBar.setCollectedBottles(0);
-            this.throwableObjects = [];
+    terminateGame() { 
+    if (!this.gameOver) {
+        this.gameOver = true;
+        this.bottleBar.setCollectedBottles(0);
+        this.throwableObjects = [];
+
+
+        // Verwende setTimeout, um showEndScreen verzögert auszuführen
+        setTimeout(() => {
             showEndScreen();
-        }
+        }, 250); // 250 Millisekunden
     }
+}
 
 
     draw() {
@@ -182,7 +185,6 @@ class World {
         this.renderMultipleObjects(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
     }
-
 
     drawMainCharacter() {
         this.ctx.translate(this.camera_x, 0);

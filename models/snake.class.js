@@ -20,6 +20,8 @@ class Snake extends MoveableObject {
         'img/enemies/enemies_snake/snake_dead/snake_dead.png'
     ];
 
+    death_sound = new Audio('sound/snake-hiss.mp3');
+
     constructor(x) {
         super().loadImage('img/enemies/enemies_snake/snake_attack/Barrel snake1 transparent.png');
         this.loadImages(this.IMAGES_ATTACKING);
@@ -59,8 +61,9 @@ class Snake extends MoveableObject {
     }
 
 
-    playDeathAnimation() {
+    triggerDeathAnimation() {
         this.stopIntervals();
         this.playAnimation(this.IMAGES_DEAD);
+        this.death_sound.play();
     }
 }
