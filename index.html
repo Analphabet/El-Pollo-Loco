@@ -32,7 +32,6 @@
 </head>
 
 <body>
-   
     <div class="title">
         <h1>El Pollo Loco</h1>
     </div>
@@ -40,20 +39,28 @@
         <div id="startScreen" class="start-screen" style="display:flex">
             <div id="menu-buttons" class="menu-buttons">
                 <button class="button-control" onclick="init()">Play</button>
-				<button class="button-control" onclick="openControls()">Controls</button>
+                <button class="button-control" onclick="openControls()">Controls</button>
                 <button class="button-control" onclick="openItems()">items</button>
                 <button class="button-control" onclick="openSettings()">Settings</button>
             </div>
+        </div>
+        <div id="ig-menu" class="ingame-menu">
+            <img id="sound-icon" onclick="toggleSoundAndImage()" class="ig-btn" src="./img/controls/SOUND_ON_icon.png">
         </div>
         <div id="settingsScreen" class="settings-screen" style="display:none">
             <div class="button-container">
                 <button class="button-control" onclick="closeSettings()">Back</button>
             </div>
+                <div class="screen-title">
+                    <h2>Settings</h2>
+                </div>
                 <div id="settings" class="settings">
+                    <button id="music-toggle-button" class="button-control" onclick="toggleSoundAndImage()">Sound
+                        On</button>
 <button id="toggle-boss-difficulty-button" class="button-control" onclick="toggleDifficulty()">Boss: Normal</button>
                 </div>
         </div>
-		<div id="controlsScreen" class="controls-screen">
+        <div id="controlsScreen" class="controls-screen">
             <div class="button-container">
                 <button class="button-control" onclick="closeControls()">Back</button>
             </div>
@@ -64,8 +71,12 @@
                 <div class="controls">
                     <div class="controls-container">
                         <div class="box jc-center">
+                            <img src="./img/controls/left_icon2.png" alt="Left Icon">
+                            <img src="./img/controls/right_icon2.png" alt="Right Icon">
                         </div>
                         <div class="box jc-center">
+                            <img src="./img/controls/SPACE_icon2.png" alt="Space Icon">
+                            <img src="./img/controls/UP_icon2.png" alt="Up Icon">
                         </div>
                         <div class="box jc-center">
                             D
@@ -97,8 +108,10 @@
 				
 					<div class="controls-container">
                         <div class="box jc-center">
+                            <img src="./img/coin/coin_1.png">
                         </div>
                         <div class="box jc-center">
+                            <img class="p20-top" src="./img/salsa/salsa_bottle.png">
                         </div>
                     </div>
 				
@@ -113,16 +126,18 @@
                 </div>
             </div>
         </div>
-    </div>
-        
         <div id="endScreen" class="end-screen" style="display:none">
             <button class="button-control" onclick="returnToMenu()">Back to Menu</button>
         </div>
         <div id="content" class="content" style="display:none">
+
 <div id="timerDisplay" class="timer-display">
     Time Left: 99 seconds
 </div>
+
             <canvas width="720" height="480" id="canvas"></canvas>
+        </div>
+      
         </div>
 </body>
 

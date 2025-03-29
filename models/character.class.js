@@ -1,10 +1,10 @@
+let deathSound = new Audio('sound/male-death-sound-128357.mp3');
 
 class Character extends MoveableObject {
     // Initial properties for the character
     y = -200;
     height = 275;
     width = 100;
-    speed = 5;  // Initial speed
     idleTimer = 0;
     longIdle = 2500;
 
@@ -135,7 +135,7 @@ class Character extends MoveableObject {
         } else if (this.handleAboveGround()) {
             this.handleJumping();
         } else {
-            if (!throwingBottle) { 
+            if (!throwingBottle) {
                 if (this.idleTimer > this.longIdle) {
                     this.handleLongIdle();
                 } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -151,7 +151,6 @@ class Character extends MoveableObject {
         }
     }
 
-   
     checkIdleTimer() {
         if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT) {
             this.idleTimer += 1000 / 120;
@@ -175,16 +174,30 @@ class Character extends MoveableObject {
 }
 
   pepeWalking() {
-    this.updateSpeed();  // Update speed based on collected coins
+    this.updateCharacterSpeed();  // Update speed based on collected coins
 
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.otherDirection = false;
+        // Nur abspielen, wenn der Sound nicht schon läuft
+        if(!this.handleAboveGround()) {
+
+        if (this.walking_sound.paused) {
+            this.walking_sound.play();
+        }
+    }
 }
 
     if (this.world.keyboard.LEFT && this.x > 0) {
         this.moveLeft();
         this.otherDirection = true;
+        // Nur abspielen, wenn der Sound nicht schon läuft
+        if(!this.handleAboveGround()) {
+
+            if (this.walking_sound.paused) {
+                this.walking_sound.play();
+            }
+        }
 }
 }
 
@@ -195,9 +208,14 @@ class Character extends MoveableObject {
     }
 
 
+    
     triggerDeath() {
+    // Check if the game is not muted before playing the death sound
+    if (!isGameMuted) {
+        deathSound.play(); // Play the death sound if not muted
+    }
 
-    this.playAnimation(this.IMAGES_DEAD);
+    this.playAnimation(this.IMAGES_DEAD); // Play the death animation
 
     // Aufruf der terminateGame-Methode, die den Endscreen anzeigt
         if (this.world) {
@@ -218,7 +236,6 @@ class Character extends MoveableObject {
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
-
     handleWalking() {
         this.playAnimation(this.IMAGES_WALKING);
     }
@@ -227,7 +244,7 @@ class Character extends MoveableObject {
         this.playAnimation(this.IMAGES_IDLE);
     }
 
-    updateSpeed() {
+    updateCharacterSpeed() {
         const speedIncreaseFactor = 0.3;  // Speed increases by 0.3 for each coin collected
         this.speed = 5 + this.world.coinBar.collectedCoins * speedIncreaseFactor;
     }

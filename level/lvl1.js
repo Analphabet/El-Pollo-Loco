@@ -1,6 +1,5 @@
 
 function initLevel() {
-    
     level1 = new Level(
         [
             new Chicken(1000, 275),
@@ -78,22 +77,22 @@ function initLevel() {
             new BackgroundObject('img/layers_bg/first_layer/2.png', 719 * 7),
         ],
         [
-            new Coin(200, -20),
-            new Coin(250, -31),
-            new Coin(300, -25),
-            new Coin(500, -30),
-            new Coin(1050, -52),
-            new Coin(1050, -30),
+            new Coin(200, -10),
+            new Coin(250, -11),
+            new Coin(300, -15),
+            new Coin(500, -5),
+            new Coin(1050, -2),
+            new Coin(1050, -20),
             new Coin(1100, -10),
             new Coin(1450, 20),
             new Coin(1800, -10),
-            new Coin(1900, -50),
+            new Coin(1900, -20),
             new Coin(2400, -10),
-            new Coin(2450, -50),
+            new Coin(2450, -30),
             new Coin(2500, -10),
             new Coin(2750, 20),
             new Coin(3100, 20),
-            new Coin(3150, -50),
+            new Coin(3150, -5),
             new Coin(3450, 20),
             new Coin(3550, 20),
             new Coin(3600, 35),

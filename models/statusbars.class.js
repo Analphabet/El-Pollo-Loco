@@ -42,7 +42,7 @@ class EndbossHealthbar extends DrawableObject {
         'img/statusbar/status_boss/100.png',
     ];
 
-    bossEnergy = 100;
+    bossEnergy = 120;
 
     constructor() {
         super();
@@ -75,8 +75,9 @@ findBossIndexPerc(percentage) {
 
 
     setPercentage(bossEnergy) {
+        let MAX_BOSSENERGY = 120;
         this.bossEnergy = bossEnergy;
-        let percentage = (this.bossEnergy / 100) * 100;
+        let percentage = (this.bossEnergy / MAX_BOSSENERGY) * 100;
         let path = this.IMAGES_BOSS_HEALTH[this.findBossIndexPerc(percentage)];
         this.img = this.imageCache[path];
     }

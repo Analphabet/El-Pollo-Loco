@@ -62,6 +62,9 @@ class World {
             if (this.character.handleCollision(coin)) {
                 this.level.coins.splice(index, 1);
                 this.coinBar.setCollectedCoins(this.coinBar.collectedCoins + 1);
+                if (!isGameMuted) {
+                    this.playGameSound('sound/coin-recieved.mp3', 0.1);
+                }
                 coin.stopAnimation();
             }
         });
@@ -72,6 +75,9 @@ class World {
             if (this.character.handleCollision(bottle)) {
                 this.level.bottles.splice(index, 1);
                 this.bottleBar.setCollectedBottles(this.bottleBar.collectedBottles + 1);
+                if (!isGameMuted) {
+                    this.playGameSound('sound/bottle-clink.mp3', 1);
+                }
             }
         });
     }
@@ -103,6 +109,7 @@ class World {
     handleBottleEndbossCollision(bottle, index) {
         bottle.hasCollided = true;
         this.level.endboss[0].bossIsHit();
+        this.playBottleShatterSound();
         bottle.animateBottleSplash();
         setTimeout(() => {
             this.removeBottleAfterCollision(index);
@@ -113,11 +120,11 @@ class World {
         this.throwableObjects.splice(index, 1);
     }
 
-    handleCollision() {
+     handleCollision() {
         this.character.hit();
         this.statusBar.setPercentage(this.character.energy);
-    }
-
+        }
+    
 
     removeEnemyFromLevel(enemy) {
         const index = this.level.enemies.indexOf(enemy);
@@ -247,4 +254,15 @@ class World {
         this.ctx.restore();
     }
 
+    playGameSound(soundFilePath, volume = 0.3) {
+        let gameSound = new Audio(soundFilePath);
+        gameSound.volume = volume;
+        gameSound.play();
+    }
+
+    playBottleShatterSound() {
+        if (!isGameMuted) {
+            this.playGameSound('sound/broken-bottle-191998.mp3');
+        }
+    }
 }

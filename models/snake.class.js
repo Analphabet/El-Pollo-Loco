@@ -33,9 +33,9 @@ class Snake extends MoveableObject {
         this.animate();
         this.offset = {
             top: 5,
-            right: 5,
-            bottom: -55,
-            left: 5
+            right: -5,
+            bottom: -50,
+            left: 15
         };
     }
 

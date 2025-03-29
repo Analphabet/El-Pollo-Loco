@@ -1,6 +1,6 @@
 
 class Chicken extends MoveableObject {
-	multiplier = Math.random() * 30;
+	multiplier = Math.random() * 25;
     width = 70;
     energy = 1;
 
@@ -21,7 +21,7 @@ class Chicken extends MoveableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.x = x;
-        this.speed = 2 + Math.random() * 1.5;
+        this.speed = 1.8 + Math.random() * 1.5;
 		this.height = 70 + this.multiplier;
 		this.y = 360 - this.multiplier;
         this.movementInterval = null;

@@ -1,3 +1,5 @@
+let plopSound = new Audio('sound/plopp-84863.mp3');  // Dein neuer Plopp-Sound
+let hasCollidedWithEnemy = false;
 
 class CollisionHandler {
     constructor(world) {
@@ -7,10 +9,12 @@ class CollisionHandler {
     handleCharacterEnemyCollisions() {
         this.world.level.enemies.forEach((enemy) => {
             if (this.world.character.handleCollision(enemy) && enemy.energy > 0) {
-                if (this.world.character.handleAboveGround() && this.world.character.speedY < 0) {
-                    this.handleCollisionAboveGround(enemy);
-                } else if (this.world.character.energy > 0) {
-                    this.handleCollision();
+                if (!this.world.character.hasCollidedWithEnemy) {
+                    if (this.world.character.handleAboveGround() && this.world.character.speedY < 0) {
+                        this.handleCollisionAboveGround(enemy);
+                    } else if (this.world.character.energy > 0) {
+                        this.world.handleCollision();
+                    }
                 }
             }
         });
@@ -78,19 +82,28 @@ class CollisionHandler {
     }
 
 
-    handleCollision() {
-        this.world.character.hit();
-        this.world.statusBar.setPercentage(this.world.character.energy);
-    }
-
     handleCollisionAboveGround(enemy) {
+        
         enemy.energy--;
+        this.world.character.hasCollidedWithEnemy = true;
         this.world.character.jump();
         if (enemy.energy === 0) {
+            if (!isGameMuted) {  
+            plopSound.play();
+        }
             enemy.triggerDeathAnimation();
             setTimeout(() => {
                 this.world.removeEnemyFromLevel(enemy);
+                this.world.character.hasCollidedWithEnemy = false;
             }, 500);
+        }
+    }
+
+    handleCollision() {
+        if (!this.speedY > 0)
+        {
+        this.character.hit();
+        this.statusBar.setPercentage(this.character.energy);
         }
     }
 

@@ -1,3 +1,6 @@
+ // Define background music variable
+ let backgroundMusic = new Audio('sound/optimistic-latin-spanish-fiesta-siesta.mp3'); // Initial music
+
 
 class Endboss extends MoveableObject {
     height = 400;
@@ -24,13 +27,6 @@ class Endboss extends MoveableObject {
         'img/enemies/enemies_boss/boss_alert/G10.png',
         'img/enemies/enemies_boss/boss_alert/G11.png',
         'img/enemies/enemies_boss/boss_alert/G12.png'
-    ];
-
-    IMAGES_HURT = [
-        'img/enemies/enemies_boss/boss_hurt/G21.png',
-        'img/enemies/enemies_boss/boss_hurt/G22.png',
-        'img/enemies/enemies_boss/boss_hurt/G23.png',
-		'img/enemies/enemies_boss/boss_hurt/G24.png'
     ];
 
     IMAGES_ATTACK = [
@@ -69,7 +65,7 @@ IMAGES_HURT = [
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 5000;
-        this.speed = 40;
+        this.speed = isEasyMode ? 25 : 40; // 20 für Easy, 40 für Normal
         this.offset = { top: 60, right: 20, bottom: 90, left: 20 };
         this.animationIntervals = [];
         this.animate();
@@ -103,6 +99,7 @@ IMAGES_HURT = [
                 setTimeout(() => {
                     this.hadFirstContact = true;
                     this.startWalking();
+					this.handleFirstContact(); // Handle background music change
 
                 }, 1000);
             });
@@ -110,9 +107,22 @@ IMAGES_HURT = [
         }
     }
 
+   handleFirstContact() {
+    // Stop the current background music
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0; // Reset audio to the start
+
+    // Check if the game is not muted
+    if (!isGameMuted && !backgroundMusicMuted) {
+        // Switch to the western theme music
+        bossMusic = new Audio('sound/western-theme-162884.mp3');
+        bossMusic.volume = 0.2; // Set volume if necessary
+        bossMusic.play(); // Play the new music
+        bossMusic.loop = true;
+    }
+}
 
 
-    
     startHurtAnimation() {
         if (!this.hurtAnimationInterval) {
             this.stopMovement();
@@ -127,7 +137,7 @@ IMAGES_HURT = [
     startWalking() {
         const walkingInterval = setInterval(() => {
             if (this.energy > 0 && !this.isDead) {
-                this.updateSpeed();
+                this.updateBossSpeed();
                 this.playAnimation(this.IMAGES_WALKING);
                 this.moveLeft();
             } else if (this.bossIsDead()) {
@@ -137,12 +147,17 @@ IMAGES_HURT = [
     }
 
 
-    updateSpeed() {
-        if (this.energy < 60) {
-            this.speed = 50 + Math.random() * 1.15;
+    updateBossSpeed() {
+        // Anpassung der Geschwindigkeit basierend auf dem Schwierigkeitsgrad
+        if (this.energy < 60 && isEasyMode) {
+            this.speed = 35 + Math.random(); 
+        } else if (this.energy < 60) {
+            this.speed = 50 + Math.random() * 1.15; // Normaler Modus, höhere Geschwindigkeit bei geringem Leben
+        } else if (!isEasyMode) {
+            this.speed = 40; // Standard-Geschwindigkeit im normalen Modus
         } else {
-            this.speed;
-        }
+			this.speed = 25;
+		}
     }
 
     bossIsHit() {
