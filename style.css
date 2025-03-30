@@ -16,8 +16,8 @@ body {
     background-size: cover;
     background-position: center;
     margin: 0;
-    max-height: 100vh;
-	max-width: 100vw;
+    height: 100vh;
+	width: 100vw;
 }
 
 .title {
@@ -63,6 +63,35 @@ canvas {
     display: block;
 }
 
+:fullscreen .canvas-container,
+:fullscreen .start-screen,
+:fullscreen .controls-screen,
+:fullscreen .end-screen,
+:fullscreen .items-container,
+:fullscreen .settings-screen {
+    width: 100vw;
+    height: 100vh;
+}
+
+:fullscreen .controls,
+:fullscreen .items,
+:fullscreen .settings {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+
+}
+
+:fullscreen .fs-centered {
+    display: block;
+    position: absolute;
+    top: 350px;
+    left: 0;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+}
 
 .start-screen {
     background: url('img/layers_bg/startscreen_1.png');
@@ -281,4 +310,131 @@ canvas {
 
 .s-btn-width {
     width: 250px;
+}
+
+.m-btn-image-container {
+    display: none;
+    gap: 30px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.m-btn-img {
+    width: 45px;
+	display: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+@media (max-width:1000px) {
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 480vh;
+    width: 720vw;
+}
+
+.mobile-button-container {
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 8px;
+    z-index: 3;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.m-btn-image-container {
+    display: flex;
+    gap: 30px;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.m-btn-img {
+    width: 45px;
+    user-select: none;
+    -webkit-user-select: none;
+	display: flex;
+}
+
+.m-left {
+    margin-left: 48px;
+}
+
+.m-right {
+    margin-right: 48px;
+}
+
+
+.rotate-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: #30363c;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 4;
+    position: absolute;
+}
+
+.rotate-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+	font-size: 16px;
+    gap: 48px;
+}
+
+.rotate-message img {
+    width: 100px;
+}
+
+    .menu-buttons {
+        gap: 10px;
+    }
+
+    .button-99 {
+        margin: 0;
+        padding: 10px 10px;
+    }
+
+    .controls-screen,
+    .items-container,
+    .settings-screen {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .canvas-container,
+    .start-screen,
+    .end-screen,
+    .content,
+    canvas {
+        height: 100vh;
+        width: 100%;
+
+    }
+
+    .end-screen button {
+        bottom: 10px;
+    }
+
+    .title,
+    .fullscreen-toggle {
+        display: none;
+    }
+
+    .screen-title h2 {
+        margin-block-start: 0.2em;
+        margin-block-end: 0.2em;
+    }
 }

@@ -1,144 +1,216 @@
 <!DOCTYPE html>
 <html translate="no" lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>El pollo loco</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="image/x-icon" href="img/salsa/salsa_bottle.png">
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" type="image/x-icon" href="img/salsa/salsa_bottle.png" />
     <script src="./models/drawableObject.class.js"></script>
     <script src="./models/movableObject.class.js"></script>
-	<script src="./models/character.class.js"></script>
-	<script src="./models/chicken.class.js"></script>
-	<script src="./models/chick.class.js"></script>
+    <script src="./models/character.class.js"></script>
+    <script src="./models/chicken.class.js"></script>
+    <script src="./models/chick.class.js"></script>
     <script src="./models/snake.class.js"></script>
-	<script src="./models/cloud.class.js"></script>
-	<script src="./models/statusbars.class.js"></script>
-	<script src="./models/coin.class.js"></script>
+    <script src="./models/cloud.class.js"></script>
+    <script src="./models/statusbars.classes.js"></script>
+    <script src="./models/coin.class.js"></script>
     <script src="./models/bottle.class.js"></script>
-	<script src="./models/world.class.js"></script>
-	<script src="./models/keyboard.class.js"></script>
-	<script src="./models/endboss.class.js"></script>
-	<script src="./models/collisionHandler.class.js"></script>
+    <script src="./models/world.class.js"></script>
+    <script src="./models/endboss.class.js"></script>
+    <script src="./models/collisionHandler.class.js"></script>
     <script src="./models/backgroundObject.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./models/throwableObject.class.js"></script>
     <script src="./level/lvl1.js"></script>
-	<script src="./script/audio.js"></script>
-	<script src="./script/eventListeners.js"></script>
-	<script src="./script/game.js"></script>
+    <script src="./models/keyboard.class.js"></script>
+    <script src="./script/audio.js"></script>
+    <script src="./script/eventListeners.js"></script>
+    <script src="./script/game.js"></script>
+  </head>
 
-</head>
-
-<body>
+  <body>
+    <div class="rotate-container">
+      <div class="rotate-message">
+        Please
+        <img src="./img/controls/phonescreenrotate.png" alt="" />
+        rotate your device
+      </div>
+    </div>
     <div class="title">
-        <h1>El Pollo Loco</h1>
+      <h1>El Pollo Loco</h1>
     </div>
     <div id="canvas-container" class="canvas-container">
-        <div id="startScreen" class="start-screen" style="display:flex">
-            <div id="menu-buttons" class="menu-buttons">
-                <button class="button-control" onclick="init()">Play</button>
-                <button class="button-control" onclick="openControls()">Controls</button>
-                <button class="button-control" onclick="openItems()">items</button>
-                <button class="button-control" onclick="openSettings()">Settings</button>
-            </div>
+      <div id="startScreen" class="start-screen" style="display: flex">
+        <div id="menu-buttons" class="menu-buttons">
+          <button class="button-control" onclick="init()">Play</button>
+          <button class="button-control" onclick="openControls()">
+            Controls
+          </button>
+          <button class="button-control" onclick="openItems()">items</button>
+          <button class="button-control" onclick="openSettings()">
+            Settings
+          </button>
         </div>
-        <div id="ig-menu" class="ingame-menu">
-            <img id="sound-icon" onclick="toggleSoundAndImage()" class="ig-btn" src="./img/controls/SOUND_ON_icon.png">
+      </div>
+      <div id="ig-menu" class="ingame-menu">
+        <img
+          id="sound-icon"
+          onclick="toggleSoundAndImage()"
+          class="ig-btn"
+          src="./img/controls/SOUND_ON_icon.png"
+        />
+        <img
+          id="fullscreen-icon"
+          onclick="toggleIGFullScreen()"
+          class="ig-btn"
+          src="./img/controls/Fullscreenicon.png"
+        />
+      </div>
+      <div id="settingsScreen" class="settings-screen" style="display: none">
+        <div class="button-container">
+          <button class="button-control" onclick="closeSettings()">Back</button>
         </div>
-        <div id="settingsScreen" class="settings-screen" style="display:none">
-            <div class="button-container">
-                <button class="button-control" onclick="closeSettings()">Back</button>
-            </div>
-                <div class="screen-title">
-                    <h2>Settings</h2>
-                </div>
-                <div id="settings" class="settings">
-                    <button id="music-toggle-button" class="button-control" onclick="toggleSoundAndImage()">Sound
-                        On</button>
-<button id="toggle-boss-difficulty-button" class="button-control" onclick="toggleDifficulty()">Boss: Normal</button>
-                </div>
+        <div class="fs-centered">
+          <div class="screen-title">
+            <h2>Settings</h2>
+          </div>
+          <div id="settings" class="settings">
+            <button
+				id ="fullscreentoggle"
+              class="button-control fullscreen-toggle"
+              onclick="toggleFullScreen()"
+            >
+              Turn Fullscreen On
+            </button>
+            <button
+              id="music-toggle-button"
+              class="button-control"
+              onclick="toggleSoundAndImage()"
+            >
+              Sound On
+            </button>
+            <button
+              id="toggle-boss-difficulty-button"
+              class="button-control"
+              onclick="toggleDifficulty()"
+            >
+              Boss: Normal
+            </button>
+          </div>
         </div>
-        <div id="controlsScreen" class="controls-screen">
-            <div class="button-container">
-                <button class="button-control" onclick="closeControls()">Back</button>
-            </div>
-            <div class="fs-centered">
-                <div class="screen-title">
-                    <h2>Controls</h2>
-                </div>
-                <div class="controls">
-                    <div class="controls-container">
-                        <div class="box jc-center">
-                            <img src="./img/controls/left_icon2.png" alt="Left Icon">
-                            <img src="./img/controls/right_icon2.png" alt="Right Icon">
-                        </div>
-                        <div class="box jc-center">
-                            <img src="./img/controls/SPACE_icon2.png" alt="Space Icon">
-                            <img src="./img/controls/UP_icon2.png" alt="Up Icon">
-                        </div>
-                        <div class="box jc-center">
-                            D
-                        </div>
-                    </div>
-                    <div class="controls-container">
-                        <div class="box jc-left">
-                            <span>Use LEFT | RIGHT Arrow Keys to move left | right</span>
-                        </div>
-                        <div class="box jc-left">
-                            <span>Press <b>SPACE</b> or use <b>UP</b> to jump</span>
-                        </div>
-                        <div class="box jc-left">
-                            <span>Press <b>D</b> to throw salsa bottles</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+      <div id="controlsScreen" class="controls-screen">
+        <div class="button-container">
+          <button class="button-control" onclick="closeControls()">Back</button>
         </div>
-		 <div id="itemsScreen" class="items-container" style="display:none">
-            <div class="button-container">
-                <button class="button-control" onclick="closeItems()">Back</button>
+        <div class="fs-centered">
+          <div class="screen-title">
+            <h2>Controls</h2>
+          </div>
+          <div class="controls">
+            <div class="controls-container">
+              <div class="box jc-center">
+                <img src="./img/controls/left_icon2.png" alt="Left Icon" />
+                <img src="./img/controls/right_icon2.png" alt="Right Icon" />
+              </div>
+              <div class="box jc-center">
+                <img src="./img/controls/SPACE_icon2.png" alt="Space Icon" />
+                <img src="./img/controls/UP_icon2.png" alt="Up Icon" />
+              </div>
+              <div class="box jc-center">D</div>
             </div>
-            <div class="fs-centered">
-                <div class="screen-title">
-                    <h2>Items</h2>
-                </div>
-                <div class="items">
-				
-					<div class="controls-container">
-                        <div class="box jc-center">
-                            <img src="./img/coin/coin_1.png">
-                        </div>
-                        <div class="box jc-center">
-                            <img class="p20-top" src="./img/salsa/salsa_bottle.png">
-                        </div>
-                    </div>
-				
-                    <div class="controls-container">
-                        <div class="box jc-left">
-                            <span>Collect Coins to increase Pepes speed. Where can he buy some?</span>
-                        </div>
-                        <div class="box jc-left">
-                            <span class="p20-top">Every fiesta needs some salsa chicken. Avenge the death of the fallen muchachos and throw hot stuff at enemies. On the other hand, tabasco bottles growing in the desert might be a rare occasion.</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="controls-container">
+              <div class="box jc-left">
+                <span>Use LEFT | RIGHT Arrow Keys to move left | right</span>
+              </div>
+              <div class="box jc-left">
+                <span>Press <b>SPACE</b> or use <b>UP</b> to jump</span>
+              </div>
+              <div class="box jc-left">
+                <span>Press <b>D</b> to throw salsa bottles</span>
+              </div>
             </div>
+          </div>
         </div>
-        <div id="endScreen" class="end-screen" style="display:none">
-            <button class="button-control" onclick="returnToMenu()">Back to Menu</button>
+      </div>
+      <div id="itemsScreen" class="items-container" style="display: none">
+        <div class="button-container">
+          <button class="button-control" onclick="closeItems()">Back</button>
         </div>
-        <div id="content" class="content" style="display:none">
+        <div class="fs-centered">
+          <div class="screen-title">
+            <h2>Items</h2>
+          </div>
+          <div class="items">
+            <div class="controls-container">
+              <div class="box jc-center">
+                <img src="./img/coin/coin_1.png" />
+              </div>
+              <div class="box jc-center">
+                <img class="p20-top" src="./img/salsa/salsa_bottle.png" />
+              </div>
+            </div>
 
-<div id="timerDisplay" class="timer-display">
-    Time Left: 99 seconds
-</div>
-
-            <canvas width="720" height="480" id="canvas"></canvas>
+            <div class="controls-container">
+              <div class="box jc-left">
+                <span
+                  >Collect Coins to increase Pepes speed. Where can he buy
+                  some?</span
+                >
+              </div>
+              <div class="box jc-left">
+                <span class="p20-top"
+                  >Every fiesta needs some salsa chicken. Avenge the death of
+                  the fallen muchachos and throw hot stuff at enemies. On the
+                  other hand, tabasco bottles growing in the desert might be a
+                  rare occasion.</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
-      
-        </div>
-</body>
+      </div>
+      <div id="endScreen" class="end-screen" style="display: none">
+        <button class="button-control" onclick="returnToMenu()">
+          Back to Menu
+        </button>
+      </div>
+      <div id="content" class="content" style="display: none">
+        <div id="timerDisplay" class="timer-display">Time Left: 99 seconds</div>
 
+        <canvas width="720" height="480" id="canvas"></canvas>
+      </div>
+      <div class="mobile-button-container">
+        <div class="m-btn-image-container m-left">
+          <img
+            id="mobile-left"
+            class="m-btn-img"
+            src="./img/controls/left-arrow-svgrepo-com.svg"
+            alt="Walk Left"
+          />
+          <img
+            id="mobile-throw"
+            class="m-btn-img"
+            src="./img/controls/bottle-svgrepo-com.svg"
+            alt="Throw Bottle"
+          />
+        </div>
+        <div class="m-btn-image-container m-right">
+          <img
+            id="mobile-jump"
+            class="m-btn-img"
+            src="./img/controls/jump-across-svgrepo-com.svg"
+            alt="Obstacle Jump"
+          />
+          <img
+            id="mobile-right"
+            class="m-btn-img"
+            src="./img/controls/right-arrow-svgrepo-com.svg"
+            alt="Walk Right"
+          />
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
