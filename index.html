@@ -37,8 +37,8 @@
         rotate your device
       </div>
     </div>
-    <div class="title">
-      <h1>El Pollo Loco</h1>
+	<div class="title">
+      <h1 class="inner-title"><div class="title-El"> El </div> <div> Pollo Loco </div> </h1>
     </div>
     <div id="canvas-container" class="canvas-container">
       <div id="startScreen" class="start-screen" style="display: flex">
@@ -62,8 +62,8 @@
         />
         <img
           id="fullscreen-icon"
-          onclick="toggleIGFullScreen()"
-          class="ig-btn"
+          class="ig-btn ig-fullscreen-toggle"
+		  onclick="toggleFullScreen()"
           src="./img/controls/Fullscreenicon.png"
         />
       </div>
@@ -172,9 +172,14 @@
         </div>
       </div>
       <div id="endScreen" class="end-screen" style="display: none">
-        <button class="button-control" onclick="returnToMenu()">
-          Back to Menu
-        </button>
+		<div class="endscreen-button-container">
+			<button class="button-control" onclick="returnToMenu()">
+				Back to Menu
+			</button>
+			<button class="button-control" onclick="init()">
+				Play again
+			</button>
+		</div>
       </div>
       <div id="content" class="content" style="display: none">
         <div id="timerDisplay" class="timer-display">Time Left: 99 seconds</div>

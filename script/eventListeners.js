@@ -107,12 +107,27 @@ window.onFullscreenChange = function () {
 };
 
 /**
+ * Handle ingame fullscreen change event.
+ */
+window.onFullscreenChange = function () {
+  let fullscreenIGButton = document.querySelector(".ig-fullscreen-toggle");
+  let fullscreenButton = document.querySelector(".fullscreen-toggle");
+  if (document.fullscreenElement) {
+    fullscreenButton.innerText = "Turn Fullscreen Off";
+    setCanvasSize(document.getElementById("canvas"), "100vw", "100vh");
+  } else {
+    fullscreenButton.innerText = "Turn Fullscreen On";
+    resetCanvasSize(document.getElementById("canvas"));
+  }
+};
+
+/**
  * Toggle the rotate screen container based on window dimensions.
  */
 function toggleRotateScreen() {
   const rotateContainer = document.querySelector(".rotate-container");
 
-  if (window.innerWidth <= 1500 && window.innerHeight > window.innerWidth) {
+  if (window.innerWidth <= 1300 && window.innerHeight > window.innerWidth) {
     rotateContainer.style.display = "flex";
   } else {
     rotateContainer.style.display = "none";
@@ -126,7 +141,7 @@ function toggleMobileButtonContainer() {
   const mobileButtonContainer = document.querySelector(
     ".mobile-button-container"
   );
-  const isMobileMode = window.innerWidth <= 1500;
+  const isMobileMode = window.innerWidth <= 1300;
 
   if (isMobileMode) {
     mobileButtonContainer.style.display = "flex";
