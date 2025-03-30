@@ -10,13 +10,13 @@ class Snake extends MoveableObject {
   energy = 1;
 
   IMAGES_ATTACKING = [
-    "img/enemies/enemies_snake/snake_attack/Barrel snake1 transparent.png",
-    "img/enemies/enemies_snake/snake_attack/Barrel snake2 transparent.png",
-    "img/enemies/enemies_snake/snake_attack/Barrel snake3 transparent.png",
-    "img/enemies/enemies_snake/snake_attack/Barrel snake4 transparent.png",
-    "img/enemies/enemies_snake/snake_attack/Barrel snake5 transparent.png",
-    "img/enemies/enemies_snake/snake_attack/Barrel snake6 transparent.png",
-    "img/enemies/enemies_snake/snake_attack/Barrel snake7 transparent.png",
+    "img/enemies/enemies_snake/snake_attack/snake1.png",
+    "img/enemies/enemies_snake/snake_attack/snake2.png",
+    "img/enemies/enemies_snake/snake_attack/snake3.png",
+    "img/enemies/enemies_snake/snake_attack/snake4.png",
+    "img/enemies/enemies_snake/snake_attack/snake5.png",
+    "img/enemies/enemies_snake/snake_attack/snake6.png",
+    "img/enemies/enemies_snake/snake_attack/snake7.png",
   ];
 
   IMAGES_DEAD = ["img/enemies/enemies_snake/snake_dead/snake_dead.png"];
@@ -25,7 +25,7 @@ class Snake extends MoveableObject {
 
   constructor(x) {
     super().loadImage(
-      "img/enemies/enemies_snake/snake_attack/Barrel snake1 transparent.png"
+      "img/enemies/enemies_snake/snake_attack/snake1.png"
     );
     this.loadImages(this.IMAGES_ATTACKING);
     this.loadImages(this.IMAGES_DEAD);
