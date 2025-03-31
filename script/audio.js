@@ -35,8 +35,8 @@ let backgroundMusicMuted = false;
  */
 function gameWonSound() {
   if (!isGameMuted) {
-    gameWon.play();
-    yeahSound.play();
+    gameWon.play().catch(error => {});
+    yeahSound.play().catch(error => {});
   }
 }
 
@@ -45,7 +45,7 @@ function gameWonSound() {
  */
 function gameLostSound() {
   if (!isGameMuted) {
-    gameLost.play();
+    gameLost.play().catch(error => {});
   }
 }
 
@@ -56,7 +56,7 @@ function playBackgroundMusic() {
   backgroundMusic.volume = 0.1;
   backgroundMusic.muted = backgroundMusicMuted;
   backgroundMusic.loop = true;
-  backgroundMusic.play();
+  backgroundMusic.play().catch(error => {});
 }
 
 /**
@@ -88,7 +88,7 @@ function playCelebrationMusic() {
   if (!isGameMuted) {
     setTimeout(() => {
       celebrationMusic.volume = 0.1;
-      celebrationMusic.play();
+      celebrationMusic.play().catch(error => {});
     }, 1500); // delay
   }
 }

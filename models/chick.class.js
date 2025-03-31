@@ -68,6 +68,6 @@ class Chick extends MoveableObject {
   triggerDeathAnimation() {
     this.stopIntervals();
     this.playAnimation(this.IMAGES_DEAD);
-    this.death_sound.play();
+    this.death_sound.play().catch(error => {});
   }
 }

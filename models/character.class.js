@@ -227,14 +227,14 @@ class Character extends MoveableObject {
       this.moveRight();
       this.otherDirection = false;
       if (!this.handleAboveGround()) {
-        this.walking_sound.play();
+        this.walking_sound.play().catch(error => {});
       }
     }
     if (this.world.keyboard.LEFT && this.x > 0) {
       this.moveLeft();
       this.otherDirection = true;
       if (!this.handleAboveGround()) {
-        this.walking_sound.play();
+        this.walking_sound.play().catch(error => {});
       }
     }
   }
@@ -252,7 +252,7 @@ class Character extends MoveableObject {
   triggerDeath() {
     // Check if the game is not muted before playing the death sound
     if (!isGameMuted) {
-      deathSound.play(); // Play the death sound if not muted
+      deathSound.play().catch(error => {}); // Play the death sound if not muted
     }
 
     this.playPepeDeathAnimation(this.IMAGES_DEAD); // Play the death animation
@@ -296,7 +296,7 @@ class Character extends MoveableObject {
    */
   handleInjury() {
     this.playAnimation(this.IMAGES_HURT);
-    this.hurt_sound.play();
+    this.hurt_sound.play().catch(error => {});
   }
 
   /**

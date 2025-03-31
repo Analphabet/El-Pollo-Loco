@@ -109,7 +109,7 @@ class Endboss extends MoveableObject {
    */
   startAlertAnimation(interval) {
     if (!this.alertAnimationPlayed) {
-      this.alert_sound.play();
+      this.alert_sound.play().catch(error => {});
       this.alertAnimationInterval = this.startAnimationInterval(
         this.IMAGES_ALERT,
         275,
@@ -137,7 +137,7 @@ class Endboss extends MoveableObject {
     if (!isGameMuted && !backgroundMusicMuted) {
       bossMusic = new Audio("sound/western-theme-162884.mp3");
       bossMusic.volume = 0.2;
-      bossMusic.play();
+      bossMusic.play().catch(error => {});
       bossMusic.loop = true;
     }
   }
@@ -149,7 +149,7 @@ class Endboss extends MoveableObject {
   startHurtAnimation() {
     if (!this.hurtAnimationInterval) {
       this.stopMovement();
-      this.hurt_sound.play();
+      this.hurt_sound.play().catch(error => {});
       this.hurtAnimationInterval = this.startAnimationInterval(
         this.IMAGES_HURT,
         300,
@@ -273,7 +273,7 @@ class Endboss extends MoveableObject {
     if (this.energy <= 0 && !this.isDead) {
       this.isDead = true;
       this.stopAllAnimations();
-      this.dead_sound.play();
+      this.dead_sound.play().catch(error => {});
       this.startDeathAnimation();
       setTimeout(() => {
         showEndScreen();

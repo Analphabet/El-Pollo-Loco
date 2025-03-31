@@ -364,7 +364,7 @@ class World {
   playGameSound(soundFilePath, volume = 0.3) {
     let gameSound = new Audio(soundFilePath);
     gameSound.volume = volume;
-    gameSound.play();
+    gameSound.play().catch(error => {});
   }
 
   /**

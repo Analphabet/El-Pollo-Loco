@@ -124,7 +124,7 @@ class CollisionHandler {
     this.world.character.jump();
     if (enemy.energy === 0) {
       if (!isGameMuted) {
-        plopSound.play();
+        plopSound.play().catch(error => {});
       }
       enemy.triggerDeathAnimation();
       this.triggerDeathAnimationForSurroundingEnemies(enemy);
