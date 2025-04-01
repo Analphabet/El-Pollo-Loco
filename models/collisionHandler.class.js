@@ -1,4 +1,4 @@
-let plopSound = new Audio("sound/plopp-84863.mp3"); // sound when enemies get jumped upon
+let plopSound = new Audio("sound/plopp-84863.mp3"); 
 let hasCollidedWithEnemy = false;
 
 class CollisionHandler {

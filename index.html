@@ -47,10 +47,13 @@
           <button class="button-control" onclick="openControls()">
             Controls
           </button>
-          <button class="button-control" onclick="openItems()">items</button>
+          <button class="button-control" onclick="openItems()">Items</button>
           <button class="button-control" onclick="openSettings()">
             Settings
           </button>
+        </div>
+        <div class="imprint-container">
+          <button class="button-control" onclick="openLegalNotice()">Legal notice</button>
         </div>
       </div>
       <div id="ig-menu" class="ingame-menu">
@@ -171,6 +174,96 @@
           </div>
         </div>
       </div>
+
+      <div id="legalNoticeScreen" class="legal-container" style="display: none">
+        <div class="button-container">
+          <button class="button-control" onclick="closeLegalNotice()">Back</button>
+		  <button class="next-button-control d-none" onclick="openLegalNoticeNext()">Next</button>
+		   <div class="fs-centered">
+        <div class="legalNoticeText">
+          <h2>Imprint</h2>
+          <p>Robert Jordan</p>
+          <p>Tassilopl. 25</p>
+          <p>81541 München</p>
+
+          <h2>Contact</h2>
+          <p>Email: robert-jordan@developerakademie.net</p>
+		
+		<div class="d-none">
+          <h2>Acceptance of terms</h2>
+          <p>By accessing and using <span>El Pollo Loco</span> (Product), you acknowledge and agree to the following
+              terms and
+              conditions, and any policies, guidelines, or amendments thereto that may be presented to you
+              from time to time. I, as listed student, may update or change the terms and conditions from
+              time to time without notice.</p>
+		</div>
+		      </div>
+			  </div>
+			  </div>
+			  </div>
+	  
+	  <div id="legalNoticeScreenNext" class="legal-container" style="display: none">
+	  <button class="next-button-control" onclick="openLegalNoticeLast()">Next</button>
+        <div class="button-container">
+          <button class="button-control" onclick="closeLegalNoticeNext()">Back</button>
+        <div class="fs-centered">
+		<h2>Scope and ownership of the product</h2>
+          <p><span>El Pollo Loco</span> has been developed as part of a student group project in a web development
+              bootcamp at the
+              <span>Developer Akademie GmbH</span>. It has an educational purpose and is not intended for
+              extensive
+              personal & business usage. As such, I cannot guarantee consistent availability, reliability,
+              accuracy, or any other aspect of quality regarding this Product.
+
+              The design of <span>El Pollo Loco</span> is owned by the <span>Developer Akademie GmbH</span>. Unauthorized
+              use,
+              reproduction,
+              modification, distribution, or replication of the design is strictly prohibited.
+          </p>
+          <h2>Proprietary rights</h2>
+          <p>Aside from the design owned by <span>Developer Akademie GmbH</span>, I, as listed student, retain
+              all proprietary rights in El Pollo Loco, including any associated copyrighted material, trademarks, and other
+              proprietary information.</p>
+
+          <h2>Use of the product</h2>
+          <p><span>El Pollo Loco</span> is intended to be used for lawful purposes only, in accordance with all
+              applicable laws and
+              regulations. Any use of El Pollo Loco for illegal activities, or to harass, harm, threaten, or intimidate
+              another person, is strictly prohibited. You are solely responsible for your interactions with
+              other users of <span>El Pollo Loco</span>. </p>
+	</div>
+     </div>
+      </div>
+	  
+	  <div id="legalNoticeScreenLast" class="legal-container" style="display: none">
+        <div class="button-container">
+          <button class="button-control" onclick="closeLegalNoticeLast()">Back</button>
+        <div class="fs-centered">
+	  
+	  <h2>Disclaimer of warranties and limitation of liability</h2>
+          <p><span>El Pollo Loco</span> is provided "as is" without warranty of any kind, whether express or implied,
+              including but
+              not limited to the implied warranties of merchantability, fitness for a particular purpose, and
+              non-infringement. In no event will we, the listed students, or the <span>Developer Akademie</span>,
+              be liable
+              for any direct, indirect, incidental, special, consequential or exemplary damages, including but
+              not limited to, damages for loss of profits, goodwill, use, data, or other intangible losses,
+              even if we have been advised of the possibility of such damages, arising out of or in connection
+              with the use or performance of <span>El Pollo Loco</span>. </p>
+
+          <h2>Indemnity</h2>
+          <p>You agree to indemnify, defend and hold harmless us, the listed students, the <span>Developer
+                  Akademie</span>,
+              and our affiliates, partners, officers, directors, agents, and employees, from and against any
+              claim, demand, loss, damage, cost, or liability (including reasonable legal fees) arising out of
+              or relating to your use of <span>El Pollo Loco</span> and/or your breach of this Legal Notice. </p>
+          <p class="paddingTop">For any Questions or notices, please contact robert-jordan@developerakademie.net.
+          </p>
+          <p class="paddingTop">Date: April 01, 2025</p>
+		  </div>
+		  </div>
+		  </div>
+	  
       <div id="endScreen" class="end-screen" style="display: none">
 		<div class="endscreen-button-container">
 			<button class="button-control" onclick="returnToMenu()">

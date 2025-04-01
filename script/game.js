@@ -6,9 +6,9 @@ let bossEscaped = false;
 let throwingBottle = false;
 let keyboard = new Keyboard();
 let intervals = [];
-let gameTimeout;  // Variable to store the timeout reference.
-let timer = 99;  // Start the timer at 99 seconds
-let timerDisplay = document.getElementById('timerDisplay');  // The element where the timer will be displayed
+let gameTimeout;  
+let timer = 99;  
+let timerDisplay = document.getElementById('timerDisplay');  
 let celebrationMusic = new Audio('sound/Mariachi Nuevo Tecalitlan - El Jarabe Tapatio.mp3');
 
 
@@ -16,7 +16,7 @@ let celebrationMusic = new Audio('sound/Mariachi Nuevo Tecalitlan - El Jarabe Ta
  * Initialize the game.
  */
 function init() {
-    timerDisplay = document.getElementById('timerDisplay');  // Hier wird das Element jetzt initialisiert
+    timerDisplay = document.getElementById('timerDisplay'); 
     resetGame();
     gameActive = true;
     initLevel();
@@ -30,10 +30,9 @@ function init() {
     toggleMobileButtonContainer();
     muteSounds();
 	
-	// Lets the timer become visible
     document.getElementById('timerDisplay').style.display = 'block';
 	
-    startGame();  // Starts game and timer
+    startGame();  
 }
 
 /**
@@ -89,7 +88,7 @@ function LostTimeout() {
  * Start the game and start the timer.
  */
 function startGame() {
-    updateTimerDisplay();  // shows initial timer value
+    updateTimerDisplay();  
     gameTimeout = setInterval(() => {
         if (gameActive) {
             timer--;  
@@ -108,7 +107,7 @@ function startGame() {
  */
 function updateTimerDisplay() {
     if (timerDisplay) {
-        timerDisplay.textContent = `Time Left: ${timer} seconds`;  // Update the timer display
+        timerDisplay.textContent = `Time Left: ${timer} seconds`; 
     }
 }
 
@@ -116,7 +115,7 @@ function updateTimerDisplay() {
  * Stop the game timeout timer.
  */
 function stopGameTimer() {
-    clearInterval(gameTimeout);  // Clears the interval timer
+    clearInterval(gameTimeout);  
 }
 
 function stopCelebrationMusic() {
@@ -129,13 +128,13 @@ function stopCelebrationMusic() {
  */
 function returnToMenu() {
     stopAllIntervals();
-    stopGameTimer();  // Stop the timeout timer when returning to the menu
+    stopGameTimer();  
     stopCelebrationMusic();
     document.getElementById('endScreen').style.display = 'none';
     document.getElementById('startScreen').style.display = 'flex';
     document.getElementById('menu-buttons').style.display = 'flex';
     document.getElementById('ig-menu').style.display = 'none';
-	document.getElementById('timerDisplay').style.display = 'none';  // Timer ausblenden
+	document.getElementById('timerDisplay').style.display = 'none';  
 }
 
 /**
@@ -152,7 +151,7 @@ function hideScreens() {
  */
 function showEndScreen() {
     gameActive = false;
-    stopGameTimer();  // Stop the timeout timer when game ends
+    stopGameTimer();  
     const endScreen = document.getElementById('endScreen');
     const mobileButtonContainer = document.querySelector('.mobile-button-container');
     if (world.checkEndbossDefeated()) {
@@ -234,6 +233,56 @@ function openItems() {
  */
 function closeItems() {
     document.getElementById('itemsScreen').style.display = 'none';
+    document.getElementById('menu-buttons').style.display = 'flex';
+}
+
+/**
+ * Open the legal notice screen.
+ */
+ function openLegalNotice() {
+    document.getElementById('legalNoticeScreen').style.display = 'flex';
+    document.getElementById('menu-buttons').style.display = 'none';
+}
+
+/**
+ * Close the legal notice screen.
+ */
+function closeLegalNotice() {
+    document.getElementById('legalNoticeScreen').style.display = 'none';
+    document.getElementById('menu-buttons').style.display = 'flex';
+}
+
+/**
+ * Open the legal notice screen.
+ */
+ function openLegalNoticeNext() {
+	document.getElementById('legalNoticeScreenNext').style.display = 'flex';
+	document.getElementById('legalNoticeScreen').style.display = 'none';
+    document.getElementById('menu-buttons').style.display = 'none';
+}
+
+/**
+ * Close the legal notice screen.
+ */
+function closeLegalNoticeNext() {
+    document.getElementById('legalNoticeScreenNext').style.display = 'none';
+    document.getElementById('menu-buttons').style.display = 'flex';
+}
+
+/**
+ * Open the legal notice screen.
+ */
+ function openLegalNoticeLast() {
+    document.getElementById('legalNoticeScreenLast').style.display = 'flex';
+	document.getElementById('legalNoticeScreenNext').style.display = 'none';	
+    document.getElementById('menu-buttons').style.display = 'none';
+}
+
+/**
+ * Close the legal notice screen.
+ */
+function closeLegalNoticeLast() {
+    document.getElementById('legalNoticeScreenLast').style.display = 'none';
     document.getElementById('menu-buttons').style.display = 'flex';
 }
 

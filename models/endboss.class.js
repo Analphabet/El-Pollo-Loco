@@ -1,7 +1,7 @@
-let backgroundMusic = new Audio("sound/optimistic-latin-spanish-fiesta-siesta.mp3"); // Initial background music before the endboss appears
+let backgroundMusic = new Audio("sound/optimistic-latin-spanish-fiesta-siesta.mp3"); 
 
-let difficultyLevel = 1; // standard: 1 = medium boss difficulty
-let damage = 10; //standard damage the boss receives, see reduceEnergy()
+let difficultyLevel = 1; 
+let damage = 10; 
 
 /**
  * Switches between Easy, Normal, and Hard modes and updates the UI.
@@ -179,23 +179,24 @@ class Endboss extends MoveableObject {
   /**
    * Update the endboss's speed based on its energy level.
    * The boss' lower energy results in increased speed incl. speed variation.
+   * The speed differs on each difficulty level (easy, normal, hardcore).
    */
   updateBossSpeed() {
     if (this.energy < 60) {
       if (difficultyLevel === 0) {
-        this.speed = 35 + Math.random(); // Easy
+        this.speed = 35 + Math.random(); 
       } else if (difficultyLevel === 1) {
-        this.speed = 50 + Math.random() * 1.15; // Normal
+        this.speed = 50 + Math.random() * 1.15; 
       } else if (difficultyLevel === 2) {
-        this.speed = 60 + Math.random() * 0.5; // Hard
+        this.speed = 60 + Math.random() * 0.5; 
       }
     } else {
       if (difficultyLevel === 0) {
-        this.speed = 25; // Easy
+        this.speed = 25; 
       } else if (difficultyLevel === 1) {
-        this.speed = 40; // Normal
+        this.speed = 40; 
       } else if (difficultyLevel === 2) {
-        this.speed = 50; // Hard
+        this.speed = 50; 
       }
     }
   }
@@ -218,15 +219,16 @@ class Endboss extends MoveableObject {
   }
 
   /**
-   * Reduces the boss' energy and does not let it decrease below the value 0.
+   * Reduces the boss' energy and does not let it decrease below the value 0. 
+   * The amount of the reduction differs according to the difficulty level (easy, normal, hardcore).
    */
   reduceEnergy() {
     if (difficultyLevel === 0) {
-      damage = 20; // Easy
+      damage = 20; 
     } else if (difficultyLevel === 1) {
-      damage = 10; // Normal
+      damage = 10; 
     } else if (difficultyLevel === 2) {
-      damage = 8; // Hard
+      damage = 8;
     }
     this.energy -= damage;
     if (this.energy < 0) {

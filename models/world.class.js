@@ -29,7 +29,7 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
-    this.collisionHandler = new CollisionHandler(this); // Zugriff auf die global definierte Klasse
+    this.collisionHandler = new CollisionHandler(this); 
     this.run();
   }
 
@@ -231,7 +231,6 @@ class World {
       this.bottleBar.setCollectedBottles(0);
       this.throwableObjects = [];
 
-      // Use setTimeout to show the EndScreen later and not immediately
       setTimeout(() => {
         showEndScreen();
       }, 250);

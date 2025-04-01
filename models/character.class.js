@@ -5,7 +5,6 @@ let deathSound = new Audio("sound/male-death-sound-128357.mp3");
  * @extends MoveableObject
  */
 class Character extends MoveableObject {
-  // Initial properties for the character
   y = -100;
   height = 275;
   width = 100;
@@ -100,7 +99,7 @@ class Character extends MoveableObject {
 
   /**
    * Handles the event when the character is hit by the Endboss.
-   * This method calculates the damage taken by the character based on the difficulty level
+   * This method calculates the damage taken by the character based on the difficulty level (easy, normal, hardcore)
    * and updates the characters energy.
    */
   bossHitsCharacter() {
@@ -109,11 +108,11 @@ class Character extends MoveableObject {
       this.lastHitTime = currentTime;
       let damage;
       if (difficultyLevel === 0) {
-        damage = 20; // Easy Mode
+        damage = 20; 
       } else if (difficultyLevel === 1) {
-        damage = 35; // Normal Mode
+        damage = 35; 
       } else if (difficultyLevel === 2) {
-        damage = 50; // Hard Mode
+        damage = 50; 
       }
       this.energy -= damage;
       if (this.energy < 0) {
@@ -159,7 +158,6 @@ class Character extends MoveableObject {
 
   handleIdleAnimation() {
     if (!throwingBottle) {
-      // No idle animation if Pepe throws bottles
       if (this.idleTimer > this.longIdle) {
         this.handleLongIdle();
       } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -222,7 +220,7 @@ class Character extends MoveableObject {
    * Pepe movement (walking) - now uses dynamic speed based on collected coins.
    */
   pepeWalking() {
-    this.updateCharacterSpeed(); // Update speed based on collected coins
+    this.updateCharacterSpeed(); 
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
       this.otherDirection = false;
@@ -250,14 +248,12 @@ class Character extends MoveableObject {
    * Check if character's state when dead.
    */
   triggerDeath() {
-    // Check if the game is not muted before playing the death sound
     if (!isGameMuted) {
-      deathSound.play().catch(error => {}); // Play the death sound if not muted
+      deathSound.play().catch(error => {}); 
     }
 
-    this.playPepeDeathAnimation(this.IMAGES_DEAD); // Play the death animation
+    this.playPepeDeathAnimation(this.IMAGES_DEAD);
 
-    // terminateGame method shows the end screen
     if (this.world) {
       this.world.terminateGame();
     }
@@ -270,13 +266,15 @@ class Character extends MoveableObject {
    * This function cycles through the provided image frames at a specified interval
    * and updates the character's image to simulate the death animation. Once the
    * animation is complete, it stops and does not repeat.
+   * 
+   * It sets flag and prevents playing if the animation is already in process.
    *
    * @param {Array} images - An array of image paths representing the frames of the animation.
    *
    */
   playPepeDeathAnimation(images) {
-    if (this.isAnimationPlaying) return; // Prevent playing if the animation is already playing
-    this.isAnimationPlaying = true; // Set flag to indicate animation is in progress
+    if (this.isAnimationPlaying) return; 
+    this.isAnimationPlaying = true; 
     const totalFrames = images.length;
     let currentFrame = 0;
     const animationInterval = setInterval(() => {
@@ -285,8 +283,8 @@ class Character extends MoveableObject {
       currentFrame++;
 
       if (currentFrame >= totalFrames) {
-        clearInterval(animationInterval); // Stop the interval once the animation ends
-        this.isAnimationPlaying = false; // Reset the animation flag
+        clearInterval(animationInterval); 
+        this.isAnimationPlaying = false; 
       }
     }, 30);
   }
@@ -332,7 +330,7 @@ class Character extends MoveableObject {
    * The more coins, the faster Pepe moves.
    */
   updateCharacterSpeed() {
-    const speedIncreaseFactor = 0.3; // Speed increases by 0.3 for each coin collected
+    const speedIncreaseFactor = 0.3; 
     this.speed = 5 + this.world.coinBar.collectedCoins * speedIncreaseFactor;
   }
 

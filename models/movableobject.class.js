@@ -29,7 +29,6 @@ class MoveableObject extends DrawableObject {
       return true;
     } else {
       if (this instanceof Character && this.y > 150) {
-        // Keeping Pepe above the ground
         this.y = 150;
       }
       return this.y < 150;
@@ -97,7 +96,7 @@ class MoveableObject extends DrawableObject {
    * @returns {boolean} True if hurt, otherwise false.
    */
   isHurt() {
-    const timePassed = (Date.now() - this.lastHitTime) / 1000; // Time in seconds
+    const timePassed = (Date.now() - this.lastHitTime) / 1000; 
     return timePassed < 1;
   }
 

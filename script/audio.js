@@ -77,7 +77,7 @@ function stopBossMusic() {
 
 /**
  * Plays the celebration music after a 1.5-second delay if the game is not muted.
- * The volume of the music is set to 0.1 before playing it.
+ * The volume of the music is set to 0.1 before playing it. It starts with a delay of 1.5 seconds.
  *
  * @memberof Game
  * @this {Game} The current Game object.
@@ -89,7 +89,7 @@ function playCelebrationMusic() {
     setTimeout(() => {
       celebrationMusic.volume = 0.1;
       celebrationMusic.play().catch(error => {});
-    }, 1500); // delay
+    }, 1500); 
   }
 }
 
