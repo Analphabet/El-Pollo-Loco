@@ -16,6 +16,7 @@ let celebrationMusic = new Audio('sound/Mariachi Nuevo Tecalitlan - El Jarabe Ta
  * Initialize the game.
  */
 function init() {
+	stopCelebrationMusic();
     timerDisplay = document.getElementById('timerDisplay'); 
     resetGame();
     gameActive = true;
@@ -117,6 +118,10 @@ function updateTimerDisplay() {
 function stopGameTimer() {
     clearInterval(gameTimeout);  
 }
+
+/**
+ * Stop the celebrationMusic.
+ */
 
 function stopCelebrationMusic() {
     celebrationMusic.pause();
@@ -242,6 +247,7 @@ function closeItems() {
  function openLegalNotice() {
     document.getElementById('legalNoticeScreen').style.display = 'flex';
     document.getElementById('menu-buttons').style.display = 'none';
+	document.querySelector('.imprint-container').style.display = 'none';
 }
 
 /**
@@ -250,6 +256,7 @@ function closeItems() {
 function closeLegalNotice() {
     document.getElementById('legalNoticeScreen').style.display = 'none';
     document.getElementById('menu-buttons').style.display = 'flex';
+	document.querySelector('.imprint-container').style.display = 'flex';
 }
 
 /**
@@ -267,6 +274,7 @@ function closeLegalNotice() {
 function closeLegalNoticeNext() {
     document.getElementById('legalNoticeScreenNext').style.display = 'none';
     document.getElementById('menu-buttons').style.display = 'flex';
+	document.querySelector('.imprint-container').style.display = 'flex';
 }
 
 /**
@@ -284,6 +292,7 @@ function closeLegalNoticeNext() {
 function closeLegalNoticeLast() {
     document.getElementById('legalNoticeScreenLast').style.display = 'none';
     document.getElementById('menu-buttons').style.display = 'flex';
+	document.querySelector('.imprint-container').style.display = 'flex';
 }
 
 /**

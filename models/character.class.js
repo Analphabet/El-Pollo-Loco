@@ -1,4 +1,3 @@
-let deathSound = new Audio("sound/male-death-sound-128357.mp3");
 
 /**
  * Represents the main character in the game.

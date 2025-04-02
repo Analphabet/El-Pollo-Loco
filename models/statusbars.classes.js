@@ -149,6 +149,26 @@ class BottleBar extends DrawableObject {
     this.setCollectedBottles(0);
   }
 
+  /**
+   * Determines the index of the boss based on the given percentage.
+   * The index is assigned based on the range the percentage falls into.
+   * The higher the percentage, the higher the index.
+   *
+   * @function findBossIndexPerc
+   * @memberof Level
+   * @this {Level} The current Level object containing the bosses.
+   * @param {number} percentage - The current percentage value used to determine the boss index.
+   *
+   * @returns {number} Returns the boss index based on the given percentage:
+   * - 6 for 100% or higher
+   * - 5 for 80% or higher
+   * - 4 for 60% or higher
+   * - 3 for 40% or higher
+   * - 2 for 20% or higher
+   * - 1 for any positive percentage that equals 5 or higher
+   * - for any other percentage values return 0
+   */
+
  findBottlesIndexPerc(percentage) {
     if (percentage >= 100) {
       return 6;

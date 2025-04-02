@@ -1,4 +1,31 @@
+/**
+ * Audio element for the initial ingame background music.
+ * @type {HTMLAudioElement}
+ */
+
+let backgroundMusic = new Audio("sound/optimistic-latin-spanish-fiesta-siesta.mp3"); 
+
+
+/**
+ * Audio element for the boss theme.
+ * @type {HTMLAudioElement}
+ */
+
 let bossMusic = new Audio("sound/western-theme-162884.mp3");
+
+/**
+ * Audio element for the death sound.
+ * @type {HTMLAudioElement}
+ */
+
+let deathSound = new Audio("sound/male-death-sound-128357.mp3");
+
+/**
+ * Audio element for the plop sound.
+ * @type {HTMLAudioElement}
+ */
+
+let plopSound = new Audio("sound/plopp-84863.mp3"); 
 
 /**
  * Audio element for the game won sound.
@@ -31,12 +58,18 @@ let isGameMuted = false;
 let backgroundMusicMuted = false;
 
 /**
- * Plays the game won sound if the game is not muted.
+ * Plays the game won and yeah sound if the game is not muted.
+ * The flags make sure the game won sound is only played once and does not repeat.
  */
+let isWinSoundPlaying = false;
 function gameWonSound() {
-  if (!isGameMuted) {
+  if (!isGameMuted && !isWinSoundPlaying) {
+	isWinSoundPlaying = true;
     gameWon.play().catch(error => {});
     yeahSound.play().catch(error => {});
+	gameWon.onended = () => {
+      isWinSoundPlaying = false;
+	}; 
   }
 }
 
