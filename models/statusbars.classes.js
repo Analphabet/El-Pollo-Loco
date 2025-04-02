@@ -129,6 +129,7 @@ MAX_BOTTLES = 20;
 class BottleBar extends DrawableObject {
   IMAGES_BOTTLES = [
     "img/statusbar/status_salsa/0.png",
+	"img/statusbar/status_salsa/5.png",
     "img/statusbar/status_salsa/20.png",
     "img/statusbar/status_salsa/40.png",
     "img/statusbar/status_salsa/60.png",
@@ -148,6 +149,24 @@ class BottleBar extends DrawableObject {
     this.setCollectedBottles(0);
   }
 
+ findBottlesIndexPerc(percentage) {
+    if (percentage >= 100) {
+      return 6;
+	} else if (percentage >= 80) {
+      return 5;
+    } else if (percentage >= 60) {
+      return 4;
+    } else if (percentage >= 40) {
+      return 3;
+    } else if (percentage >= 20) {
+      return 2;
+    } else if (percentage >= 5) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   /**
    * Set the number of collected bottles and update the bottle bar's image.
    * @param {number} count - The number of collected bottles.
@@ -155,7 +174,7 @@ class BottleBar extends DrawableObject {
   setCollectedBottles(count) {
     this.collectedBottles = count;
     let percentage = (this.collectedBottles / MAX_BOTTLES) * 100;
-    let path = this.IMAGES_BOTTLES[this.findIndexPerc(percentage)];
+    let path = this.IMAGES_BOTTLES[this.findBottlesIndexPerc(percentage)];
     this.img = this.imageCache[path];
   }
 }
