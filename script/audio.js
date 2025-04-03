@@ -45,11 +45,6 @@ let yeahSound = new Audio("sound/oh-yeah.mp3");
  */
 let gameLost = new Audio("sound/lost-sound.mp3");
 
-/**
- * Indicates whether the game audio is muted.
- * @type {boolean}
- */
-let isGameMuted = false;
 
 /**
  * Indicates whether the background music is muted.

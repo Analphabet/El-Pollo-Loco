@@ -138,17 +138,18 @@ function toggleRotateScreen() {
  * Toggle the mobile button container based on window dimensions.
  */
 function toggleMobileButtonContainer() {
-  const mobileButtonContainer = document.querySelector(
-    ".mobile-button-container"
-  );
-  const isMobileMode = window.innerWidth <= 1300;
+  const mobileButtonContainer = document.querySelector(".mobile-button-container");
+
+  // Prüft, ob das Gerät einen Touchscreen hat (pointer: coarse) oder eine Bildschirmbreite unter einem Schwellenwert hat
+  const isMobileMode = window.matchMedia("(pointer: coarse)").matches;
 
   if (isMobileMode) {
-    mobileButtonContainer.style.display = "flex";
+    mobileButtonContainer.style.display = "flex";  // Button sichtbar machen
   } else {
-    mobileButtonContainer.style.display = "none";
+    mobileButtonContainer.style.display = "none";  // Button ausblenden
   }
 }
+
 
 /**
  * Toggle the in-game menu.
