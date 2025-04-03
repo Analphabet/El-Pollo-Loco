@@ -1,73 +1,111 @@
-let difficultyLevel = 1; // Standardwert (Normal)
+let difficultyLevel = 1; 
 let damage = 10;
 
 /**
- * Lädt die gespeicherten Einstellungen aus dem Local Storage
+ * Load the saved settings from the local storage
  */
 function loadSettings() {
-    // Musik (Sound)
-    const isSoundOn = localStorage.getItem('sound') !== 'false';  // Wenn 'false', ist Sound aus
+    loadSoundSettings();
+    loadDifficultySettings();
+}
+
+/**
+ * Load the sound settings from local storage and update the UI
+ */
+function loadSoundSettings() {
+    const isSoundOn = localStorage.getItem('sound') !== 'false';  
     const soundButton = document.getElementById('music-toggle-button');
-    const soundIcon = document.getElementById('sound-icon');  // Für das Sound-Icon
+    const soundIcon = document.getElementById('sound-icon');  
 
     if (isSoundOn) {
         soundButton.textContent = "Sound On";
         soundIcon.src = "./img/controls/SOUND_ON_icon.png";
-        isGameMuted = false; // Sound ist an
+        isGameMuted = false; 
     } else {
         soundButton.textContent = "Sound Off";
         soundIcon.src = "./img/controls/SOUND_OFF_icon.png";
-        isGameMuted = true;  // Sound ist aus
+        isGameMuted = true; 
     }
+}
 
-    // Boss-Schwierigkeit
+/**
+ * Load the difficulty settings from local storage
+ */
+function loadDifficultySettings() {
     const savedDifficulty = localStorage.getItem('difficultyLevel');
     if (savedDifficulty !== null) {
         difficultyLevel = parseInt(savedDifficulty, 10);
     }
-    updateDifficultyStatus();  // Aktualisiert den Button-Text
+    updateDifficultyStatus();
 }
 
+ 
+
 /**
- * Speichert die Einstellungen im Local Storage
+ * Saves the settings in the Local Storage
  */
 function saveSetting(key, value) {
     localStorage.setItem(key, value);
 }
 
 /**
- * Schaltet Musik und Sound um und speichert die neue Einstellung
+ * Toggles sound and music and saves the new settings
  */
 function toggleSoundAndImage() {
     const soundButton = document.getElementById('music-toggle-button');
-    const soundIcon = document.getElementById('sound-icon');  // Für das Sound-Icon
+    const soundIcon = document.getElementById('sound-icon');  
 
-    // Wenn Sound aus ist, wird es an und umgekehrt
     if (isGameMuted) {
-        soundButton.textContent = "Sound On";
-        soundIcon.src = "./img/controls/SOUND_ON_icon.png";
-        isGameMuted = false; // Sound an
-        saveSetting('sound', 'true');
+        enableSound(soundButton, soundIcon);
     } else {
-        soundButton.textContent = "Sound Off";
-        soundIcon.src = "./img/controls/SOUND_OFF_icon.png";
-        isGameMuted = true;  // Sound aus
-        saveSetting('sound', 'false');
+        disableSound(soundButton, soundIcon);
     }
 
-    // Alle Sounds (einschließlich Hintergrundmusik und Bossmusik) aktualisieren
+    saveSoundSetting();
     updateSoundStatus();
-    muteSounds(); // Audio Elemente muten/unmuten je nach isGameMuted
 }
 
 /**
- * Aktualisiert den Sound-Status
+ * Enable sound and update the button/icon
  */
+function enableSound(soundButton, soundIcon) {
+    soundButton.textContent = "Sound On";
+    soundIcon.src = "./img/controls/SOUND_ON_icon.png";
+    isGameMuted = false;
+}
+
+/**
+ * Disable sound and update the button/icon
+ */
+function disableSound(soundButton, soundIcon) {
+    soundButton.textContent = "Sound Off";
+    soundIcon.src = "./img/controls/SOUND_OFF_icon.png";
+    isGameMuted = true;
+}
+
+/**
+ * Save the sound setting to local storage
+ */
+function saveSoundSetting() {
+    saveSetting('sound', isGameMuted ? 'false' : 'true');
+}
+
+/**
+ * Updates the sound-related status
+ */
+
 function updateSoundStatus() {
-    backgroundMusic.muted = isGameMuted;
-    backgroundMusicMuted = isGameMuted;
+    updateSoundUI();
+    muteSounds();
+}
+
+/**
+ * Updates the sound-related UI (button and icon)
+ */
+function updateSoundUI() {
     let musicToggleButton = document.getElementById("music-toggle-button");
     let soundIcon = document.getElementById("sound-icon");
+
     if (isGameMuted) {
         musicToggleButton.innerText = "Sound Off";
         soundIcon.src = "./img/controls/SOUND_OFF_icon.png";
@@ -75,37 +113,23 @@ function updateSoundStatus() {
         musicToggleButton.innerText = "Sound On";
         soundIcon.src = "./img/controls/SOUND_ON_icon.png";
     }
-    // Mute alle anderen Sounds, wenn der Sound deaktiviert ist
-    muteSounds(); 
 }
 
 /**
- * Mutes oder unmutes alle Spiel-Sounds basierend auf dem Game-Mute-Status.
+ * Mutes the sounds in the game
  */
 function muteSounds() {
-    if (backgroundMusic) {
-        backgroundMusic.muted = isGameMuted; // Hintergrundmusik muten
-    }
-    if (bossMusic) {
-        bossMusic.muted = isGameMuted; // Bossmusik muten
-    }
-    if (deathSound) {
-        deathSound.muted = isGameMuted; // Tod-Sound muten
-    }
-    if (plopSound) {
-        plopSound.muted = isGameMuted; // Plop-Sound muten
-    }
-    if (gameWon) {
-        gameWon.muted = isGameMuted; // Gewinn-Sound muten
-    }
-    if (yeahSound) {
-        yeahSound.muted = isGameMuted; // Yeah-Sound muten
-    }
-    if (gameLost) {
-        gameLost.muted = isGameMuted; // Verlust-Sound muten
-    }
+    const sounds = [
+        backgroundMusic, bossMusic, deathSound, plopSound, 
+        gameWon, yeahSound, gameLost
+    ];
 
-    // Auch die Feindgeräusche, falls vorhanden, werden gemutet
+    sounds.forEach(sound => {
+        if (sound) {
+            sound.muted = isGameMuted;
+        }
+    });
+
     muteChickenSounds();
     muteChickSounds();
     muteSnakeSounds();
@@ -113,24 +137,26 @@ function muteSounds() {
     muteEndbossSounds();
 }
 
+
+
 /**
- * Schaltet den Schwierigkeitsgrad um und speichert die neue Einstellung
+ * Toggles difficulty (0 = Easy, 1 = Normal, 2 = Hardcore) and saves the new settings
  */
 function toggleDifficulty() {
-    difficultyLevel = (difficultyLevel + 1) % 3; // 0 = Easy, 1 = Normal, 2 = Hardcore
-    saveDifficulty();  // Speichert den aktuellen Schwierigkeitsgrad im Local Storage
-    updateDifficultyStatus();  // Aktualisiert den Button-Text
+    difficultyLevel = (difficultyLevel + 1) % 3; 
+    saveDifficulty(); 
+    updateDifficultyStatus();
 }
 
 /**
- * Speichert den aktuellen Schwierigkeitsgrad im Local Storage
+ * Saves the latest difficulty mode setting in the Local Storage
  */
 function saveDifficulty() {
     localStorage.setItem('difficultyLevel', difficultyLevel);
 }
 
 /**
- * Aktualisiert den Text des Difficulty Toggle Buttons basierend auf dem aktuellen Schwierigkeitsgrad
+ * Updates the text of the difficulty toggle buttons based on the latest difficulty setting
  */
 function updateDifficultyStatus() {
     let difficultyToggleButton = document.getElementById("toggle-boss-difficulty-button");
@@ -144,7 +170,6 @@ function updateDifficultyStatus() {
     }
 }
 
-// Wird aufgerufen, wenn die Seite geladen wird
 document.addEventListener('DOMContentLoaded', function() {
-    loadSettings();  // Lädt die gespeicherten Einstellungen
+    loadSettings();  
 });
